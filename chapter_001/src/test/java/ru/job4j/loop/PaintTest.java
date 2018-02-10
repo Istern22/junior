@@ -15,7 +15,7 @@ public class PaintTest {
     @Test
     public void whenPyramid4Right() {
         Paint paint = new Paint();
-        String rst = paint.rightTr1(4);
+        String rst = paint.rightTrl(4);
         System.out.println(rst);
         assertThat(rst,
                 is(
