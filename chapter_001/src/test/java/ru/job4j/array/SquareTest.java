@@ -11,6 +11,7 @@ import static org.junit.Assert.assertThat;
  */
 
 public class SquareTest {
+
     @Test
     public void whenBoundEqualsFiveThanArrayOneFourNineSixteenTwentyFive() {
         Square square = new Square();
