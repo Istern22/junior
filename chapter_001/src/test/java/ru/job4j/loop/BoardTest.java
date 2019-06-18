@@ -19,7 +19,7 @@ public class BoardTest {
         final String line = System.getProperty("line.separator");
         String ln = System.lineSeparator();
         String expected = (String.format("X X%s X %sX X%s", line, line, line));
-        assertThat(result, is (expected));
+        assertThat(result, is(expected));
     }
 
     @Test
@@ -29,7 +29,7 @@ public class BoardTest {
         final String line = System.getProperty("line.separator");
         String ln = System.lineSeparator();
         String expected = (String.format("X X X%s X X %sX X X%s X X %s", line, line, line, line));
-        assertThat(result, is (expected));
+        assertThat(result, is(expected));
     }
 
 }

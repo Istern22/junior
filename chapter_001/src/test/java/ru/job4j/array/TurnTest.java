@@ -16,7 +16,7 @@ public class TurnTest {
         Turn turn = new Turn();
         int[] array = {1, 2, 3, 4, 5};
         int[] resultArray = turn.back(array);
-        int[] expected ={5, 4, 3, 2, 1};
+        int[] expected = {5, 4, 3, 2, 1};
         assertThat(resultArray, is(expected));
     }
 
@@ -25,7 +25,7 @@ public class TurnTest {
         Turn turn = new Turn();
         int[] array = {1, 2, 3, 4};
         int[] resultArray = turn.back(array);
-        int[] expected ={4, 3, 2, 1};
+        int[] expected = {4, 3, 2, 1};
         assertThat(resultArray, is(expected));
     }
 

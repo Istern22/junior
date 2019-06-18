@@ -14,7 +14,7 @@ import static org.junit.Assert.assertThat;
 	 @Test
 	 public void whenGreetBot() {
 		 DummyBot bot = new DummyBot();
-		 assertThat (
+		 assertThat(
 		    bot.answer("Привет, Бот."),
 			is("Привет, умник.")
 		);

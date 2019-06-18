@@ -15,7 +15,7 @@ public class SquareTest {
     @Test
     public void whenBoundEqualsFiveThanArrayOneFourNineSixteenTwentyFive() {
         Square square = new Square();
-        int[] result= square.calculate(5);
+        int[] result = square.calculate(5);
         int[] expected = {1, 4, 9, 16, 25};
         assertThat(result, is(expected));
     }
