@@ -5,12 +5,7 @@ import java.util.ArrayList;
 
 public class DepartmentSort {
 
-
-    public String[] sort(String[] departmentStructure, boolean ASC) {
-
-        // Вспомогательные массивы для записи департамента и соответственно родителя
-        ArrayList <String> departments = new ArrayList<>();
-        ArrayList <String> parents = new ArrayList<>();
+    public void departmentSplit(ArrayList<String> departments, ArrayList<String> parents, String[] departmentStructure) {
         // Проходим по каждому элементу массива, разбиваем его на части
         for (int i = 0; i < departmentStructure.length; i++) {
             String[] depParts = departmentStructure[i].split("\\\\");
@@ -19,7 +14,7 @@ public class DepartmentSort {
             String pathToParent = "";
             // Вычисляем путь до подразделения(включительно) и до родителя(не включая сам элемент)
             // Если такой путь не содержится в массиве подразделений, то добавляем путь и его родителя
-            // Таким образом будут добавлены недостающие элеенты дерева
+            // Таким образом будут добавлены недостающие элементы дерева
             // Нужно добавлять полный путь, чтобы потом по нему сортировать
             // Нужно добавлять полный путь до родителя, чтобы различать путь через одинаковые промежуточные элементы
             for (int j = 0; j < depParts.length; j++) {
@@ -39,8 +34,14 @@ public class DepartmentSort {
                 }
             }
         }
+    }
+
+    public String[] sort(String[] departmentStructure, boolean ASC) {
         //Новый список для записи результата
         ArrayList<String> result = new ArrayList<String>();
+        ArrayList<String> departments = new ArrayList<>();
+        ArrayList<String> parents = new ArrayList<>();
+        departmentSplit(departments, parents, departmentStructure);
         //Запускаем рекурсивную сортировку по дереву департаментов
         treeSort("", parents, departments, result, ASC);
         //Преобразовываем список в массив с результатом
