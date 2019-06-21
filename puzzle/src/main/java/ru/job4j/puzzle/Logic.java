@@ -68,7 +68,7 @@ public class Logic {
         int[][] table = this.convert();
         boolean result = false;
         int sum;
-        for(int i = 0; i < table.length; i++) {
+        for (int i = 0; i < table.length; i++) {
             sum = 0;
             for (int j = 0; j < table.length; j++) {
                 sum = sum + table[i][j];
@@ -78,12 +78,12 @@ public class Logic {
                 return result;
             }
         }
-        for(int j = 0; j < table.length; j++) {
+        for (int j = 0; j < table.length; j++) {
             sum = 0;
             for (int i = 0; i < table.length; i++) {
                 sum = sum + table[i][j];
                 }
-            if(sum == table.length)  {
+            if (sum == table.length)  {
                 result = true;
                 return result;
             }

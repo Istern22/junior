@@ -36,21 +36,21 @@ public class DepartmentSort {
         }
     }
 
-    public String[] sort(String[] departmentStructure, boolean ASC) {
+    public String[] sort(String[] departmentStructure, boolean asc) {
         //Новый список для записи результата
         ArrayList<String> result = new ArrayList<String>();
         ArrayList<String> departments = new ArrayList<>();
         ArrayList<String> parents = new ArrayList<>();
         departmentSplit(departments, parents, departmentStructure);
         //Запускаем рекурсивную сортировку по дереву департаментов
-        treeSort("", parents, departments, result, ASC);
+        treeSort("", parents, departments, result, asc);
         //Преобразовываем список в массив с результатом
         String[] sortedDepartments = new String[departments.size()];
         result.toArray(sortedDepartments);
         return sortedDepartments;
     }
     //Сортировка пузырком дочерних отделов относительно родителя по возрастанию
-    public ArrayList <String> bubbleSortACS(ArrayList <String> childSort) {
+    public ArrayList<String> bubbleSortasc(ArrayList<String> childSort) {
 
         for (int i = childSort.size() - 1; i > 0; i--) {
             for (int j = 0; j < i; j++) {
@@ -64,7 +64,7 @@ public class DepartmentSort {
         return childSort;
     }
     //Сортировка пузырком дочерних отделов относительно родителя по убыванию
-    public ArrayList <String> bubbleSortDESC(ArrayList <String> childSort) {
+    public ArrayList<String> bubbleSortDESC(ArrayList<String> childSort) {
         for (int i = childSort.size() - 1; i > 0; i--) {
             for (int j = 0; j < i; j++) {
                 if (childSort.get(j).compareTo(childSort.get(j + 1)) < 0) {
@@ -79,7 +79,7 @@ public class DepartmentSort {
     //Сортировка департаментов
     //На входе переменная подразделения(полный путь), потомков которого сортируем, список родительских отделов, список подразделений, результат, логическая перменная,
     // по которой определяем, сортируем по возрастанию или убыванию
-    public void treeSort(String parent, ArrayList<String> parents, ArrayList<String> departments, ArrayList<String> result, boolean ASC) {
+    public void treeSort(String parent, ArrayList<String> parents, ArrayList<String> departments, ArrayList<String> result, boolean asc) {
         //Создаем список потомков от подразделения
         ArrayList<String> children = new ArrayList<String>();
         for (int i = 0; i < parents.size(); i++) {
@@ -91,11 +91,11 @@ public class DepartmentSort {
             return;
         }
         //Сортируем потомков по возрастанию или убыванию
-        children = ASC ? bubbleSortACS(children) : bubbleSortDESC(children);
+        children = asc ? bubbleSortasc(children) : bubbleSortDESC(children);
         //Каждого потомка добавляем в результат и повторяем сортировку для его потомков
         for (String child : children) {
             result.add(child);
-            treeSort(child, parents, departments, result, ASC);
+            treeSort(child, parents, departments, result, asc);
         }
     }
 }
