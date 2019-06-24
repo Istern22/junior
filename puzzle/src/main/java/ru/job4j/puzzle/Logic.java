@@ -67,20 +67,20 @@ public class Logic {
     public boolean isWin() {
         int[][] table = this.convert();
         boolean result = false;
-        int horizontalSum = 0;
-        int verticalSum = 0;
+        int horizontal = 0;
+        int vertical = 0;
         for (int row = 0; row < table.length; row++) {
-            horizontalSum = 0;
-            verticalSum = 0;
+            horizontal = 0;
+            vertical = 0;
             for (int column = 0; column < table.length; column++) {
                 if (table[row][column] == 1) {
-                    horizontalSum++;
+                    horizontal++;
                 }
                 if (table[column][row] == 1) {
-                    verticalSum++;
+                    vertical++;
                 }
             }
-            if (horizontalSum == table.length || verticalSum == table.length) {
+            if (horizontal == table.length || vertical == table.length) {
                 return true;
             }
         }

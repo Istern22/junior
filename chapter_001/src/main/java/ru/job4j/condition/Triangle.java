@@ -27,7 +27,6 @@ package ru.job4j.condition;
 	 * @param bc - расстояние между точками b c
 	 * @return Полупериметр.
 	 */
-
 	public double period(double ab, double ac, double bc) {
 		return (ab + ac + bc) / 2;
 	}
@@ -37,7 +36,6 @@ package ru.job4j.condition;
 	 *
 	 * @return Вернуть площадь, если треугольник существует или -1, если треугольника нет.
 	 */
-
 	public double area() {
 		double rsl = -1;
 		double ab = this.a.distanceTo(this.b);
@@ -58,7 +56,6 @@ package ru.job4j.condition;
 	 * @param bc - Длина от точки b до точки c.
 	 * @return
 	 */
-
 	private boolean exist(double ab, double ac, double bc) {
 		return (ab + bc) > ac & (bc + ac) > ab & (ab + ac) > bc;
 	}

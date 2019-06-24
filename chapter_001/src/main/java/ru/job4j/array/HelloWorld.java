@@ -16,7 +16,6 @@ package ru.job4j.array;
 public class HelloWorld {
     private int iValue;
     static void changeIt(HelloWorld value) {
-
         value.iValue = 10;
     }
     public static void main(String[] argvc) {
