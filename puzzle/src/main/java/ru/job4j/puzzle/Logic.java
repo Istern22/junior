@@ -80,7 +80,7 @@ public class Logic {
                     verticalSum++;
                 }
             }
-            if(horizontalSum == table.length || verticalSum == table.length) {
+            if (horizontalSum == table.length || verticalSum == table.length) {
                 return true;
             }
         }
