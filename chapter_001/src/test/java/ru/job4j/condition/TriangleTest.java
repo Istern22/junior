@@ -7,17 +7,16 @@ import static org.junit.Assert.*;
 public class TriangleTest {
     @Test
     public void whenAreaSetThreePointsThenTriangleArea() {
-        // создаем три объекта класса Point.
-        Point a = new Point(0, 0);
-        Point b = new Point(0, 2);
-        Point c = new Point(2, 0);
-        // Создаем объект треугольник и передаем в него объекты точек.
-        Triangle triangle = new Triangle(a, b, c);
-        // Вычисляем площадь.
+        Point first = new Point(0, 0);
+        Point second = new Point(0, 2);
+        Point third = new Point(2, 0);
+        Triangle triangle = new Triangle(first, second, third);
         double result = triangle.area();
-        // Задаем ожидаемый результат.
+        first.info();
+        second.info();
+        third.info();
+        System.out.println(String.format("Result is %s", result));
         double expected = 2D;
-        //Проверяем результат и ожидаемое значение.
         assertThat(result, closeTo(expected, 0.1));
     }
 }
