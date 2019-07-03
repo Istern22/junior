@@ -34,8 +34,8 @@ public class PointTest {
 
     @Test
     public void whenZeroAndTenAndFive() {
-        Point first = new Point(0, 10,0);
-        Point second = new Point(0, 0,5);
+        Point first = new Point(0, 10, 0);
+        Point second = new Point(0, 0, 5);
         double result = first.distance3d(second);
         first.info();
         second.info();
