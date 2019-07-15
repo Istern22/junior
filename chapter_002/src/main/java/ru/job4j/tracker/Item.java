@@ -28,5 +28,43 @@ public class Item {
         this.id = id;
     }
 
+    public String getName() {
+        return name;
+    }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getDesc() {
+        return desc;
+    }
+
+    public void setDesc(String desc) {
+        this.desc = desc;
+    }
+
+    public long getTime() {
+        return time;
+    }
+
+    public void setTime(long time) {
+        this.time = time;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Item item = (Item) o;
+        return time == item.time &&
+                Objects.equals(id, item.id) &&
+                Objects.equals(name, item.name) &&
+                Objects.equals(desc, item.desc);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, desc, time);
+    }
 }
