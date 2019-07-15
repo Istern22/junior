@@ -22,7 +22,7 @@ public class TrackerTest {
         //Добавляем заявку в трекер. Теперь в объект проиницилизирован id.
         tracker.add(previous);
         //Создаем новую заявку.
-        Item next = new Item("test2","testDescription", 1234L);
+        Item next = new Item("test2", "testDescription", 1234L);
         //Проставляем старый id из previous, который был сгенерирован выше.
         next.setId(previous.getId());
         //Обновляем заявку в трекере.
@@ -34,31 +34,49 @@ public class TrackerTest {
     @Test
     public void whenDeleteItemThenNewArray() {
         Tracker tracker = new Tracker();
-        Item item0 = new Item("name0","description0", 0L);
+        Item item0 = new Item("name0", "description0", 0L);
         tracker.add(item0);
-        Item item1 = new Item("name1","description1", 1L);
+        Item item1 = new Item("name1", "description1", 1L);
         tracker.add(item1);
-        Item item2 = new Item("name2","description2", 2L);
+        Item item2 = new Item("name2", "description2", 2L);
         tracker.add(item2);
-        Item item3 = new Item("name3","description3", 3L);
+        Item item3 = new Item("name3", "description3", 3L);
         tracker.add(item3);
-        Item item4 = new Item("name4","description4", 4L);
+        Item item4 = new Item("name4", "description4", 4L);
         tracker.add(item4);
         boolean result = tracker.delete(item1.getId());
         assertThat(result, is(true));
     }
+
+    @Test
+    public void whenDeleteNotFoundedItemThenFalse() {
+        Tracker tracker = new Tracker();
+        Item item0 = new Item("name0", "description0", 0L);
+        tracker.add(item0);
+        Item item1 = new Item("name1", "description1", 1L);
+        tracker.add(item1);
+        Item item2 = new Item("name2", "description2", 2L);
+        tracker.add(item2);
+        Item item3 = new Item("name3", "description3", 3L);
+        tracker.add(item3);
+        Item item4 = new Item("name4", "description4", 4L);
+        tracker.add(item4);
+        boolean result = tracker.delete("12345");
+        assertThat(result, is(false));
+    }
+
     @Test
     public void whenFindAllThenNewArray() {
         Tracker tracker = new Tracker();
-        Item item0 = new Item("name0","description0", 0L);
+        Item item0 = new Item("name0", "description0", 0L);
         tracker.add(item0);
-        Item item1 = new Item("name1","description1", 1L);
+        Item item1 = new Item("name1", "description1", 1L);
         tracker.add(item1);
-        Item item2 = new Item("name2","description2", 2L);
+        Item item2 = new Item("name2", "description2", 2L);
         tracker.add(item2);
-        Item item3 = new Item("name3","description3", 3L);
+        Item item3 = new Item("name3", "description3", 3L);
         tracker.add(item3);
-        Item item4 = new Item("name4","description4", 4L);
+        Item item4 = new Item("name4", "description4", 4L);
         tracker.add(item4);
         Item[] result = tracker.findAll();
         Item[] expected = {item0, item1, item2, item3, item4};
@@ -68,19 +86,37 @@ public class TrackerTest {
     @Test
     public void whenFindAllAndDeleteThenNewArray() {
         Tracker tracker = new Tracker();
-        Item item0 = new Item("name0","description0", 0L);
+        Item item0 = new Item("name0", "description0", 0L);
         tracker.add(item0);
-        Item item1 = new Item("name1","description1", 1L);
+        Item item1 = new Item("name1", "description1", 1L);
         tracker.add(item1);
-        Item item2 = new Item("name2","description2", 2L);
+        Item item2 = new Item("name2", "description2", 2L);
         tracker.add(item2);
-        Item item3 = new Item("name3","description3", 3L);
+        Item item3 = new Item("name3", "description3", 3L);
         tracker.add(item3);
-        Item item4 = new Item("name4","description4", 4L);
+        Item item4 = new Item("name4", "description4", 4L);
         tracker.add(item4);
         tracker.delete(item1.getId());
         Item[] result = tracker.findAll();
         Item[] expected = {item0, item2, item3, item4};
+        assertThat(result, is(expected));
+    }
+
+    @Test
+    public void whenFindAllNamesThanNewArray() {
+        Tracker tracker = new Tracker();
+        Item item0 = new Item("name0", "description0", 0L);
+        tracker.add(item0);
+        Item item1 = new Item("name1", "description1", 1L);
+        tracker.add(item1);
+        Item item2 = new Item("name0", "description2", 2L);
+        tracker.add(item2);
+        Item item3 = new Item("name3", "description3", 3L);
+        tracker.add(item3);
+        Item item4 = new Item("name0", "description4", 4L);
+        tracker.add(item4);
+        Item[] result = tracker.findByName("name0");
+        Item[] expected = {item0, item2, item4};
         assertThat(result, is(expected));
     }
 }

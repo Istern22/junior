@@ -70,7 +70,7 @@ public class Tracker {
                 break;
             }
         }
-        System.arraycopy(this.items, location, this.items, 0, this.items.length - location - 1);
+        System.arraycopy(this.items, location + 1, this.items, location, this.items.length - location - 1);
         position--;
         return result;
     }
@@ -90,7 +90,17 @@ public class Tracker {
      *  Элементы, у которых совпадает name, копирует в результирующий массив и возвращает его;
      */
     public Item[] findByName(String key) {
-        return this.items;
+        Item[] names = new Item[position];
+        int j = 0;
+        for (int i = 0; i < position; i++) {
+                if (this.items[i].getName().equals(key)) {
+                    names[j] = this.items[i];
+                    j++;
+            }
+        }
+        Item[] result = new Item[j];
+        System.arraycopy(names, 0, result, 0, j);
+        return result;
     }
 
     /**
