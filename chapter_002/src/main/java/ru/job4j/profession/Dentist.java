@@ -5,11 +5,11 @@ public class Dentist extends Doctor {
     private Operation operation;
     private int number;
 
-    public Dentist(String name, String surname, String education, long birthday){
-        super(name,surname, education,birthday);
+    public Dentist(String name, String surname, String education, long birthday) {
+        super(name, surname, education, birthday);
     }
 
-    public void treat(Diagnose diagnose, Patient patient, String specifics, Tooth tooth){
+    public void treat(Diagnose diagnose, Patient patient, String specifics, Tooth tooth) {
         super.treat(diagnose, patient, specifics);
         return;
     }

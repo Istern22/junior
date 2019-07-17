@@ -6,11 +6,11 @@ public class Doctor extends Profession {
     private Patient patient;
     private String specifics;
 
-    public Doctor(String name, String surname, String education, long birthday){
+    public Doctor(String name, String surname, String education, long birthday) {
         super(name, surname, education, birthday);
     }
 
-    public void treat(Diagnose diagnose, Patient patient, String specifics){
+    public void treat(Diagnose diagnose, Patient patient, String specifics) {
         return;
     }
 
