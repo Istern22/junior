@@ -67,11 +67,11 @@ public class Tracker {
             if (this.items[i].getId().equals(id)) {
                 location = i;
                 result = true;
+                System.arraycopy(this.items, location + 1, this.items, location, this.items.length - location - 1);
+                position--;
                 break;
             }
         }
-        System.arraycopy(this.items, location + 1, this.items, location, this.items.length - location - 1);
-        position--;
         return result;
     }
 
@@ -110,9 +110,9 @@ public class Tracker {
      */
     public Item findById(String id) {
         Item result = null;
-        for (Item item : items) {
-            if (item != null && item.getId().equals(id)) {
-                result = item;
+        for (int i = 0; i < position; i++) {
+            if (this.items[i] != null && this.items[i].getId().equals(id)) {
+                result = this.items[i];
                 break;
             }
         }
