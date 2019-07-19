@@ -14,10 +14,10 @@ public class Item {
     private String desc;
     private long time;
 
-    public Item(String name, String desc, long time) {
+    public Item(String name, String desc) {
         this.name = name;
         this.desc = desc;
-        this.time = time;
+        this.time = System.currentTimeMillis();
     }
 
     public String getId() {
