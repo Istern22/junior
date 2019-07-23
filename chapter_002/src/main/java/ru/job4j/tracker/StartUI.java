@@ -122,6 +122,7 @@ public class StartUI {
             String name = this.input.ask("Отредактируйте имя заявки: ");
             String desc = this.input.ask("Отредактируйте описание заявки: ");
             Item newItem = new Item(name, desc);
+            newItem.setId(id);
             this.tracker.replace(id, newItem);
             System.out.println("---------------Заявка отредактирована---------------");
         } else {
