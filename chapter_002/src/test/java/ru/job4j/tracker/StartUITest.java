@@ -20,12 +20,12 @@ public class StartUITest {
         assertThat(tracker.findAll()[0].getName(), is("test name"));
     }
 
-    @Test
+ /*   @Test
     public void whenUpdateThenTrackerHasUpdatedValue() {
         Tracker tracker = new Tracker();
         Item item = tracker.add(new Item("test name", "desc"));
         Input input = new StubInput(new String[]{"2", item.getId(), "test replace", "замена заявки", "6"});
         new StartUI(input, tracker).init();
         assertThat(tracker.findById(item.getId()).getName(), is("test replace"));
-    }
+    }*/
 }
