@@ -20,7 +20,7 @@ public class StartUITest {
     private static final String MENU =
             "Меню:\r\n"
             + "0. Add new item\r\n"
-            + "1. Show all item\r\n"
+            + "1. Show all items\r\n"
             + "2. Edit item\r\n"
             + "3. Delete item\r\n"
             + "4. Find item by id\r\n"
@@ -60,7 +60,6 @@ public class StartUITest {
                                 .append(System.lineSeparator())
                                 .append("---------------Новая заявка с getId: " + tracker.findAll()[0].getId() + "---------------")
                                 .append(System.lineSeparator())
-                                .append(MENU)
                                 .toString()
                 )
         );
@@ -81,7 +80,6 @@ public class StartUITest {
                                 .append(System.lineSeparator())
                                 .append("---------------Заявка отредактирована---------------")
                                 .append(System.lineSeparator())
-                                .append(MENU)
                                 .toString()
                 )
         );
@@ -103,7 +101,6 @@ public class StartUITest {
                                 .append(System.lineSeparator())
                                 .append("Имя: " + item2.getName() + " Описание: " + item2.getDesc() + " Время: " + item2.getTime())
                                 .append(System.lineSeparator())
-                                .append(MENU)
                                 .toString()
                 )
         );
@@ -123,7 +120,6 @@ public class StartUITest {
                                 .append(System.lineSeparator())
                                 .append("---------------Заявка удалена---------------")
                                 .append(System.lineSeparator())
-                                .append(MENU)
                                 .toString()
                 )
         );
@@ -145,7 +141,6 @@ public class StartUITest {
                                 .append(System.lineSeparator())
                                 .append("Ваша заявка: " + item.getName() + " Описание: " + item.getDesc())
                                 .append(System.lineSeparator())
-                                .append(MENU)
                                 .toString()
                 )
         );
@@ -167,7 +162,6 @@ public class StartUITest {
                                 .append(System.lineSeparator())
                                 .append("Имя: " + item.getName() + " Описание: " + item.getDesc() + " Время: " + item.getTime())
                                 .append(System.lineSeparator())
-                                .append(MENU)
                                 .toString()
                 )
         );
