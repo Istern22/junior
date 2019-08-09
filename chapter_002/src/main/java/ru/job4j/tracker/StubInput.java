@@ -1,5 +1,7 @@
 package ru.job4j.tracker;
 
+import java.util.List;
+
 public class StubInput implements Input {
     /**
      * Это поле содержит последовательность ответов пользователя.
@@ -20,6 +22,10 @@ public class StubInput implements Input {
 
     public StubInput(final String[] value) {
         this.value = value;
+    }
+
+    public int ask(String question, List<Integer> range) {
+        return 0;
     }
 
     /**

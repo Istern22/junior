@@ -1,5 +1,7 @@
 package ru.job4j.tracker;
 
+import java.util.List;
+
 /**
  * @author Svetlana Ragulina (alistern22@gmail.com)
  * @version $Id$
@@ -8,7 +10,7 @@ package ru.job4j.tracker;
 
 public class ValidateInput extends ConsoleInput {
 
-    public int ask(String question, int[] range) {
+    public int ask(String question, List<Integer> range) {
         boolean invalid = true;
         int value = -1;
         do {
@@ -18,7 +20,7 @@ public class ValidateInput extends ConsoleInput {
             } catch(MenuOutException moe) {
                 System.out.println("Please select key from menu");
             } catch(NumberFormatException nfe) {
-                System.out.println("Please enter validate data again.");
+                System.out.println("Please enter valid data again.");
             }
         } while (invalid);
         return value;
