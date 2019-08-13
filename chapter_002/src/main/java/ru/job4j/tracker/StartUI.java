@@ -43,9 +43,9 @@ public class StartUI {
         }
         do {
             menu.show();
-            int key = Integer.valueOf(input.ask("Введите пункт меню:", range));
+            int key = Integer.valueOf(input.ask("SELECT: ", range));
             menu.select(key);
-        } while (!"6".equals(input.ask("Введите пункт меню:")));
+        } while (!"6".equals(input.ask("SELECT:")));
     }
 
     /**

@@ -18,14 +18,14 @@ import static org.junit.Assert.assertThat;
 
 public class StartUITest {
     private static final String MENU =
-            "Меню:\r\n"
-            + "0. Add new item\r\n"
-            + "1. Show all items\r\n"
-            + "2. Edit item\r\n"
-            + "3. Delete item\r\n"
-            + "4. Find item by id\r\n"
-            + "5. Find items by name\r\n"
-            + "6. Exit program\r\n";
+            "MENU\r\n"
+            + "0 - Add item\r\n"
+            + "1 - Show items\r\n"
+            + "2 - Update item\r\n"
+            + "3 - Delete item\r\n"
+            + "4 - Find item by id\r\n"
+            + "5 - Find items by name\r\n"
+            + "6 - Exit program\r\n";
 
     /**
      * Поле содержит дефолтный вывод в консоль.
@@ -56,9 +56,10 @@ public class StartUITest {
         assertThat(new String(out.toByteArray()), is(
                         new StringBuilder()
                                 .append(MENU)
-                                .append("---------------Добавление новой заявки---------------")
+                                .append("----------ADD ITEM----------")
                                 .append(System.lineSeparator())
-                                .append("---------------Новая заявка с getId: " + tracker.findAll()[0].getId() + "---------------")
+                                .append(String.format("New item id: %s | name: %s | description: %s",
+                                        tracker.findAll()[0].getId(), tracker.findAll()[0].getName(), tracker.findAll()[0].getDesc()))
                                 .append(System.lineSeparator())
                                 .toString()
                 )
@@ -74,11 +75,13 @@ public class StartUITest {
         assertThat(new String(out.toByteArray()), is(
                         new StringBuilder()
                                 .append(MENU)
-                                .append("---------------Редактирование заявки---------------")
+                                .append("----------UPDATE ITEM----------")
                                 .append(System.lineSeparator())
-                                .append("Ваша заявка: " + item.getName() + " Описание: " + item.getDesc())
+                                .append(String.format("Item name: %s | description: %s",
+                                        item.getName(), item.getDesc()))
                                 .append(System.lineSeparator())
-                                .append("---------------Заявка отредактирована---------------")
+                                .append(String.format("Updated item id: %s | name: %s | description: %s",
+                                        item.getId(), item.getName(), item.getDesc()))
                                 .append(System.lineSeparator())
                                 .toString()
                 )
@@ -95,11 +98,13 @@ public class StartUITest {
         assertThat(new String(out.toByteArray()), is(
                         new StringBuilder()
                                 .append(MENU)
-                                .append("---------------Все существующие заявки---------------")
+                                .append("----------ALL ITEMS----------")
                                 .append(System.lineSeparator())
-                                .append("Имя: " + item1.getName() + " Описание: " + item1.getDesc() + " Время: " + item1.getTime())
+                                .append(String.format("Item id: %s | name: %s | description: %s",
+                                        item1.getId(), item1.getName(), item1.getDesc()))
                                 .append(System.lineSeparator())
-                                .append("Имя: " + item2.getName() + " Описание: " + item2.getDesc() + " Время: " + item2.getTime())
+                                .append(String.format("Item id: %s | name: %s | description: %s",
+                                        item2.getId(), item2.getName(), item2.getDesc()))
                                 .append(System.lineSeparator())
                                 .toString()
                 )
@@ -116,9 +121,9 @@ public class StartUITest {
         assertThat(new String(out.toByteArray()), is(
                         new StringBuilder()
                                 .append(MENU)
-                                .append("---------------Удаление заявки---------------")
+                                .append("----------DELETE ITEM----------")
                                 .append(System.lineSeparator())
-                                .append("---------------Заявка удалена---------------")
+                                .append("Item deleted")
                                 .append(System.lineSeparator())
                                 .toString()
                 )
@@ -135,11 +140,10 @@ public class StartUITest {
         assertThat(new String(out.toByteArray()), is(
                         new StringBuilder()
                                 .append(MENU)
-                                .append("---------------Поиск заявки по id---------------")
+                                .append("----------FIND ITEM BY ID----------")
                                 .append(System.lineSeparator())
-                                .append("---------------Заявка найдена---------------")
-                                .append(System.lineSeparator())
-                                .append("Ваша заявка: " + item.getName() + " Описание: " + item.getDesc())
+                                .append(String.format("Required item id: %s | name: %s | description: %s",
+                                        item.getId(), item.getName(), item.getDesc()))
                                 .append(System.lineSeparator())
                                 .toString()
                 )
@@ -156,11 +160,10 @@ public class StartUITest {
         assertThat(new String(out.toByteArray()), is(
                         new StringBuilder()
                                 .append(MENU)
-                                .append("---------------Поиск заявок по имени---------------")
+                                .append("----------FIND ITEM BY NAME----------")
                                 .append(System.lineSeparator())
-                                .append("---------------Заявки найдены---------------")
-                                .append(System.lineSeparator())
-                                .append("Имя: " + item.getName() + " Описание: " + item.getDesc() + " Время: " + item.getTime())
+                                .append(String.format("Required item id: %s | name: %s | description: %s",
+                                        item.getId(), item.getName(), item.getDesc()))
                                 .append(System.lineSeparator())
                                 .toString()
                 )

@@ -49,13 +49,13 @@ public class MenuTracker {
      * Метод заполняет массив
      */
     public void fillActions() {
-        this.actions.add(new AddItem());
-        this.actions.add(new ShowItems());
-        this.actions.add(new UpdateItem());
-        this.actions.add(new DeleteItem());
-        this.actions.add(new FindItemById());
-        this.actions.add(new FindItemsByName());
-        this.actions.add(new ExitProgram());
+        this.actions.add(new AddItem(0, "Add item"));
+        this.actions.add(new ShowItems(1, "Show items"));
+        this.actions.add(new UpdateItem(2, "Update item"));
+        this.actions.add(new DeleteItem(3, "Delete item"));
+        this.actions.add(new FindItemById(4, "Find item by id"));
+        this.actions.add(new FindItemsByName(5, "Find items by name"));
+        this.actions.add(new ExitProgram(6, "Exit program"));
     }
 
     /**
@@ -71,7 +71,7 @@ public class MenuTracker {
      * Метод выводит на экран меню
      */
     public void show() {
-        System.out.println("Меню:");
+        System.out.println("MENU");
         for (UserAction action : this.actions) {
             if (action != null) {
                 System.out.println(action.info());
@@ -79,181 +79,136 @@ public class MenuTracker {
         }
     }
 
-    private static class AddItem implements UserAction {
-        private static final int ADD = 0;
+    class AddItem extends BaseAction {
 
-        @Override
-        public int key() {
-            return ADD;
+        public AddItem(int key, String name) {
+            super(key, name);
         }
 
         @Override
         public void execute(Input input, Tracker tracker) {
-            System.out.println("---------------Добавление новой заявки---------------");
-            String name = input.ask("Введите имя заявки: ");
-            String desc = input.ask("Введите описание заявки: ");
+            System.out.println("----------ADD ITEM----------");
+            String name = input.ask("Enter item name: ");
+            String desc = input.ask("Enter item description: ");
             Item item = new Item(name, desc);
             tracker.add(item);
-            System.out.println("---------------Новая заявка с getId: " + item.getId() + "---------------");
-        }
-
-        @Override
-        public String info() {
-            return key() + ". Add new item";
+            System.out.println(String.format("New item id: %s | name: %s | description: %s",
+                    item.getId(), item.getName(), item.getDesc()));
         }
     }
 
-    private static class ShowItems implements UserAction {
-        private static final int SHOW_ALL = 1;
+    private static class ShowItems extends BaseAction {
 
-        @Override
-        public int key() {
-            return SHOW_ALL;
+        public ShowItems(int key, String name) {
+            super(key, name);
         }
 
         @Override
         public void execute(Input input, Tracker tracker) {
-            System.out.println("---------------Все существующие заявки---------------");
+            System.out.println("----------ALL ITEMS----------");
             Item[] items = tracker.findAll();
             for (Item item : items) {
-                System.out.println("Имя: " + item.getName() + " Описание: " + item.getDesc() + " Время: " + item.getTime());
+                System.out.println(String.format("Item id: %s | name: %s | description: %s",
+                        item.getId(), item.getName(), item.getDesc()));
             }
-        }
-
-        @Override
-        public String info() {
-            return key() + ". Show all items";
         }
     }
 
-    private static class UpdateItem implements UserAction {
-        private static final int EDIT = 2;
+    private static class UpdateItem extends BaseAction {
 
-        @Override
-        public int key() {
-            return EDIT;
+        public UpdateItem(int key, String name) {
+            super(key, name);
         }
 
         @Override
         public void execute(Input input, Tracker tracker) {
-            System.out.println("---------------Редактирование заявки---------------");
-            String id = input.ask("Введите id заявки, которую нужно отредактировать");
+            System.out.println("----------UPDATE ITEM----------");
+            String id = input.ask("Enter item id");
             Item item = tracker.findById(id);
             if (item != null) {
-                System.out.println("Ваша заявка: " + item.getName() + " Описание: " + item.getDesc());
-                String name = input.ask("Отредактируйте имя заявки: ");
-                String desc = input.ask("Отредактируйте описание заявки: ");
+                System.out.println(String.format("Item name: %s | description: %s",
+                        item.getName(), item.getDesc()));
+                String name = input.ask("Enter new name: ");
+                String desc = input.ask("Enter new description: ");
                 Item newItem = new Item(name, desc);
                 newItem.setId(id);
                 tracker.replace(id, newItem);
-                System.out.println("---------------Заявка отредактирована---------------");
+                System.out.println(String.format("Updated item id: %s | name: %s | description: %s",
+                        item.getId(), item.getName(), item.getDesc()));
             } else {
-                System.out.println("Заявки не существует.");
+                System.out.println("Item doesn't exist");
             }
-        }
-
-        @Override
-        public String info() {
-            return key() + ". Edit item";
         }
     }
 
-    private static class DeleteItem implements UserAction {
-        private static final int DELETE = 3;
+    private static class DeleteItem extends BaseAction {
 
-        @Override
-        public int key() {
-            return DELETE;
+        public DeleteItem(int key, String name) {
+            super(key, name);
         }
 
         @Override
         public void execute(Input input, Tracker tracker) {
-            System.out.println("---------------Удаление заявки---------------");
-            String id = input.ask("Введите id заявки, которую нужно удалить");
+            System.out.println("----------DELETE ITEM----------");
+            String id = input.ask("Enter item id");
             if (tracker.delete(id)) {
-                System.out.println("---------------Заявка удалена---------------");
+                System.out.println("Item deleted");
             } else {
-                System.out.println("---------------Заявки не существует---------------");
+                System.out.println("Item doesn't exist");
             }
-        }
-
-        @Override
-        public String info() {
-            return key() + ". Delete item";
         }
     }
 
-    private static class FindItemById implements UserAction {
-        private static final int FIND_BY_ID = 4;
+    private static class FindItemById extends BaseAction {
 
-        @Override
-        public int key() {
-            return FIND_BY_ID;
+        public FindItemById(int key, String name) {
+            super(key, name);
         }
 
         @Override
         public void execute(Input input, Tracker tracker) {
-            System.out.println("---------------Поиск заявки по id---------------");
-            String id = input.ask("Введите id заявки, которую нужно найти");
+            System.out.println("----------FIND ITEM BY ID----------");
+            String id = input.ask("Enter item id");
             Item item = tracker.findById(id);
             if (item != null) {
-                System.out.println("---------------Заявка найдена---------------");
-                System.out.println("Ваша заявка: " + item.getName() + " Описание: " + item.getDesc());
+                System.out.println(String.format("Required item id: %s | name: %s | description: %s",
+                        item.getId(), item.getName(), item.getDesc()));
             } else {
-                System.out.println("---------------Заявка не найдена---------------");
+                System.out.println("Item doesn't exist");
             }
-        }
-
-        @Override
-        public String info() {
-            return key() + ". Find item by id";
         }
     }
 
-    private static class FindItemsByName implements UserAction {
-        private static final int FIND_BY_NAME = 5;
+    private static class FindItemsByName extends BaseAction {
 
-        @Override
-        public int key() {
-            return FIND_BY_NAME;
+        public FindItemsByName(int key, String name) {
+            super(key, name);
         }
 
         @Override
         public void execute(Input input, Tracker tracker) {
-            System.out.println("---------------Поиск заявок по имени---------------");
-            String name = input.ask("Введите имя заявки, которую нужно найти");
+            System.out.println("----------FIND ITEM BY NAME----------");
+            String name = input.ask("Enter item name");
             Item[] items = tracker.findByName(name);
             if (items.length != 0) {
                 for (Item item : items) {
-                    System.out.println("---------------Заявки найдены---------------");
-                    System.out.println("Имя: " + item.getName() + " Описание: " + item.getDesc() + " Время: " + item.getTime());
+                    System.out.println(String.format("Required item id: %s | name: %s | description: %s",
+                            item.getId(), item.getName(), item.getDesc()));
                 }
             } else {
-                System.out.println("---------------Заявки не найдены---------------");
+                System.out.println("Item doesn't exist");
             }
-        }
-
-        @Override
-        public String info() {
-            return key() + ". Find items by name";
         }
     }
 
-    private static class ExitProgram implements UserAction {
-        private static final int EXIT = 6;
+    private static class ExitProgram extends BaseAction {
 
-        @Override
-        public int key() {
-            return EXIT;
+        public ExitProgram(int key, String name) {
+            super(key, name);
         }
 
         @Override
         public void execute(Input input, Tracker tracker) {
-        }
-
-        @Override
-        public String info() {
-            return key() + ". Exit program";
         }
     }
 }
