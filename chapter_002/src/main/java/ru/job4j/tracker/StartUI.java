@@ -41,11 +41,13 @@ public class StartUI {
         for (int i = 0; i < menu.getActionsLength(); i++) {
             range.add(i);
         }
-        do {
-            menu.show();
+        menu.show();
+        while (true) {
             int key = Integer.valueOf(input.ask("SELECT: ", range));
             menu.select(key);
-        } while (!"6".equals(input.ask("SELECT:")));
+            if (key == 6)
+                break;
+        }
     }
 
     /**
