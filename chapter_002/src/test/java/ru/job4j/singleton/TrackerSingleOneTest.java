@@ -1,4 +1,4 @@
-package ru.job4j.tracker.singleton;
+package ru.job4j.singleton;
 
 import org.junit.Test;
 import static org.hamcrest.Matchers.is;
@@ -10,12 +10,12 @@ import static org.junit.Assert.*;
  * @since 0.1
  */
 
-public class TrackerSingleFourTest {
+public class TrackerSingleOneTest {
 
     @Test
-    public void whenTrackerSingleFour() {
-        TrackerSingleFour tracker1 = TrackerSingleFour.INSTANCE;
-        TrackerSingleFour tracker2 = TrackerSingleFour.INSTANCE;
+    public void whenTrackerSingleOne() {
+        TrackerSingleOne tracker1 = TrackerSingleOne.getInstance();
+        TrackerSingleOne tracker2 = TrackerSingleOne.getInstance();
         assertThat((tracker1.equals(tracker2)), is(true));
     }
 }

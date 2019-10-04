@@ -1,4 +1,4 @@
-package ru.job4j.tracker.singleton;
+package ru.job4j.singleton;
 
 import org.junit.Test;
 import static org.hamcrest.Matchers.is;
