@@ -9,7 +9,7 @@ import static org.junit.Assert.assertThat;
 
 public class SortUserTest {
     @Test
-    public void whenTwoUsers() {
+    public void ageComparing() {
         SortUser users = new SortUser();
         List<User> list = (new ArrayList<User>(Arrays.asList(
                 new User("anna", 2),
@@ -17,6 +17,32 @@ public class SortUserTest {
         )));
         Set<User> sortUser = users.sort(list);
         assertThat(sortUser.iterator().next().getName(), is("ivan"));
+    }
+
+    @Test
+    public void nameLengthComparing() {
+        SortUser users = new SortUser();
+        List<User> list = (new ArrayList<User>(Arrays.asList(
+                new User("anna", 2),
+                new User("eva", 1),
+                new User("aleksandr", 5)
+        )));
+        List<User> sortUser = users.sortNameLength(list);
+        assertThat(sortUser.iterator().next().getName(), is("eva"));
+    }
+
+    @Test
+    public void nameAgeComparing() {
+        SortUser users = new SortUser();
+        List<User> list = (new ArrayList<User>(Arrays.asList(
+                new User("anna", 2),
+                new User("anna", 4),
+                new User("eva", 1),
+                new User("aleksandr", 5),
+                new User("aleksandr", 3)
+        )));
+        List<User> sortUser = users.sortByAllFields(list);
+        assertThat(sortUser.iterator().next().getAge(), is(3));
     }
 }
 
