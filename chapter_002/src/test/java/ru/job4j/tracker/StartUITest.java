@@ -59,7 +59,7 @@ public class StartUITest {
                                 .append("----------ADD ITEM----------")
                                 .append(System.lineSeparator())
                                 .append(String.format("New item id: %s | name: %s | description: %s",
-                                        tracker.findAll()[0].getId(), tracker.findAll()[0].getName(), tracker.findAll()[0].getDesc()))
+                                        tracker.findAll().get(0).getId(), tracker.findAll().get(0).getName(), tracker.findAll().get(0).getDesc()))
                                 .append(System.lineSeparator())
                                 .toString()
                 )
