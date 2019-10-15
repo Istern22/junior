@@ -45,8 +45,9 @@ public class StartUI {
         while (true) {
             int key = Integer.valueOf(input.ask("SELECT: ", range));
             menu.select(key);
-            if (key == 6)
+            if (key == 6) {
                 break;
+            }
         }
     }
 
