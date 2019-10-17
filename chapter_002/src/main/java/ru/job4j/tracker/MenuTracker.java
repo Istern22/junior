@@ -88,12 +88,14 @@ public class MenuTracker {
         @Override
         public void execute(Input input, Tracker tracker) {
             System.out.println("----------ADD ITEM----------");
+            System.lineSeparator();
             String name = input.ask("Enter item name: ");
             String desc = input.ask("Enter item description: ");
             Item item = new Item(name, desc);
             tracker.add(item);
-            System.out.println(String.format("New item id: %s | name: %s | description: %s",
+            System.out.print(String.format("New item id: %s | name: %s | description: %s",
                     item.getId(), item.getName(), item.getDesc()));
+            System.lineSeparator();
         }
     }
 
@@ -128,15 +130,18 @@ public class MenuTracker {
             if (item != null) {
                 System.out.println(String.format("Item name: %s | description: %s",
                         item.getName(), item.getDesc()));
+                System.lineSeparator();
                 String name = input.ask("Enter new name: ");
                 String desc = input.ask("Enter new description: ");
                 Item newItem = new Item(name, desc);
                 newItem.setId(id);
                 tracker.replace(id, newItem);
-                System.out.println(String.format("Updated item id: %s | name: %s | description: %s",
+                System.out.print(String.format("Updated item id: %s | name: %s | description: %s",
                         item.getId(), item.getName(), item.getDesc()));
+                System.lineSeparator();
             } else {
-                System.out.println("Item doesn't exist");
+                System.out.print("Item doesn't exist");
+                System.lineSeparator();
             }
         }
     }
@@ -152,9 +157,11 @@ public class MenuTracker {
             System.out.println("----------DELETE ITEM----------");
             String id = input.ask("Enter item id");
             if (tracker.delete(id)) {
-                System.out.println("Item deleted");
+                System.out.print("Item deleted");
+                System.lineSeparator();
             } else {
-                System.out.println("Item doesn't exist");
+                System.out.print("Item doesn't exist");
+                System.lineSeparator();
             }
         }
     }
@@ -168,13 +175,16 @@ public class MenuTracker {
         @Override
         public void execute(Input input, Tracker tracker) {
             System.out.println("----------FIND ITEM BY ID----------");
+            System.lineSeparator();
             String id = input.ask("Enter item id");
             Item item = tracker.findById(id);
             if (item != null) {
-                System.out.println(String.format("Required item id: %s | name: %s | description: %s",
+                System.out.print(String.format("Required item id: %s | name: %s | description: %s",
                         item.getId(), item.getName(), item.getDesc()));
+                System.lineSeparator();
             } else {
-                System.out.println("Item doesn't exist");
+                System.out.print("Item doesn't exist");
+                System.lineSeparator();
             }
         }
     }
@@ -188,15 +198,18 @@ public class MenuTracker {
         @Override
         public void execute(Input input, Tracker tracker) {
             System.out.println("----------FIND ITEM BY NAME----------");
+            System.lineSeparator();
             String name = input.ask("Enter item name");
             ArrayList<Item> items = tracker.findByName(name);
             if (items.size() != 0) {
                 for (Item item : items) {
-                    System.out.println(String.format("Required item id: %s | name: %s | description: %s",
+                    System.out.print(String.format("Required item id: %s | name: %s | description: %s",
                             item.getId(), item.getName(), item.getDesc()));
+                    System.lineSeparator();
                 }
             } else {
-                System.out.println("Item doesn't exist");
+                System.out.print("Item doesn't exist");
+                System.lineSeparator();
             }
         }
     }
