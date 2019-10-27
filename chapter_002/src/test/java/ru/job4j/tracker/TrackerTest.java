@@ -1,6 +1,10 @@
 package ru.job4j.tracker;
 
 import org.junit.Test;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
 
@@ -19,15 +23,10 @@ public class TrackerTest {
     public void whenReplaceNameThenReturnNewName() {
         Tracker tracker = new Tracker();
         Item previous = new Item("test1", "testDescription");
-        //Добавляем заявку в трекер. Теперь в объект проиницилизирован id.
         tracker.add(previous);
-        //Создаем новую заявку.
         Item next = new Item("test2", "testDescription");
-        //Проставляем старый id из previous, который был сгенерирован выше.
         next.setId(previous.getId());
-        //Обновляем заявку в трекере.
         tracker.replace(previous.getId(), next);
-        //Проверяем, что заявка с таким id имеет новое имя test2.
         assertThat(tracker.findById(previous.getId()).getName(), is("test2"));
     }
 
@@ -78,8 +77,8 @@ public class TrackerTest {
         tracker.add(item3);
         Item item4 = new Item("name4", "description4");
         tracker.add(item4);
-        Item[] result = tracker.findAll();
-        Item[] expected = {item0, item1, item2, item3, item4};
+        ArrayList<Item> result = tracker.findAll();
+        ArrayList<Item> expected = new ArrayList<Item>(Arrays.asList(item0, item1, item2, item3, item4));
         assertThat(result, is(expected));
     }
 
@@ -97,8 +96,8 @@ public class TrackerTest {
         Item item4 = new Item("name4", "description4");
         tracker.add(item4);
         tracker.delete(item1.getId());
-        Item[] result = tracker.findAll();
-        Item[] expected = {item0, item2, item3, item4};
+        ArrayList<Item> result = tracker.findAll();
+        ArrayList<Item> expected = new ArrayList<Item>(Arrays.asList(item0, item2, item3, item4));
         assertThat(result, is(expected));
     }
 
@@ -115,8 +114,8 @@ public class TrackerTest {
         tracker.add(item3);
         Item item4 = new Item("name0", "description4");
         tracker.add(item4);
-        Item[] result = tracker.findByName("name0");
-        Item[] expected = {item0, item2, item4};
+        ArrayList<Item> result = tracker.findByName("name0");
+        ArrayList<Item> expected = new ArrayList<Item>(Arrays.asList(item0, item2, item4));
         assertThat(result, is(expected));
     }
 }
