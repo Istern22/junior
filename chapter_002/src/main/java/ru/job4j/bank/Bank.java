@@ -17,15 +17,26 @@ public class Bank {
         this.users.remove(user);
     }
 
+    public User findUser(String passport) {
+        User foundUser = null;
+        for (User user : users.keySet()) {
+            if (passport.equals(user.getPassport())) {
+                foundUser = user;
+                break;
+            }
+        }
+        return foundUser;
+    }
+
     public void addAccountToUser(String passport, Account account) {
-        List<Account> accounts = this.users.get(new User(null, passport));
+        List<Account> accounts = this.users.get(this.findUser(passport));
         if (accounts != null) {
             accounts.add(account);
         }
     }
 
     public void deleteAccountFromUser(String passport, Account account) {
-        List<Account> accounts = this.users.get(new User(null, passport));
+        List<Account> accounts = this.users.get(this.findUser(passport));
         if (accounts != null) {
             accounts.remove(account);
         }
@@ -33,11 +44,9 @@ public class Bank {
 
     public List<Account> getUserAccounts(String passport) {
         List<Account> accounts = new ArrayList<>();
-        for (User user : users.keySet()) {
-            if (passport == user.getPassport()) {
-                accounts = users.get(user);
-                break;
-            }
+        User user = this.findUser(passport);
+        if (user != null) {
+            accounts = users.get(user);
         }
         return accounts;
     }
