@@ -32,26 +32,37 @@ public class Bank {
     }
 
     public List<Account> getUserAccounts(String passport) {
-        return this.users.get(new User(null, passport));
+        List<Account> accounts = new ArrayList<>();
+        for (User user : users.keySet()) {
+            if (passport == user.getPassport()) {
+                accounts = users.get(user);
+                break;
+            }
+        }
+        return accounts;
+    }
+
+    public Account findAccount(String passport, String requisite) {
+        List<Account> accounts = getUserAccounts(passport);
+        Account userAccount = null;
+        for (Account account : accounts) {
+            if (requisite == account.getRequisites()) {
+                userAccount = account;
+                break;
+            }
+        }
+        return userAccount;
     }
 
     public boolean transferMoney(String srcPassport, String srcRequisite, String destPassport, String destRequisite, double amount) {
         boolean result = false;
-        List<Account> src = this.getUserAccounts(srcPassport);
-        List<Account> dest = this.getUserAccounts(destPassport);
-        if (src != null && dest != null) {
-            int srcIndex = src.indexOf(new Account(0, srcRequisite));
-            int destIndex = dest.indexOf(new Account(0, destRequisite));
-            if (srcIndex >= 0 && destIndex >= 0) {
-                Account srcAccount = src.get(srcIndex);
-                Account destAccount = dest.get(destIndex);
-                if (srcAccount.getValue() != 0.0 && srcAccount.getValue() <= amount) {
-                        srcAccount.setValue(srcAccount.getValue() - amount);
-                        destAccount.setValue(destAccount.getValue() + amount);
-                        result = true;
-                }
+        Account srcAccount = findAccount(srcPassport, srcRequisite);
+        Account destAccount = findAccount(destPassport, destRequisite);
+        if (srcAccount != null && destAccount != null && srcAccount.getValue() >= amount) {
+                srcAccount.setValue(srcAccount.getValue() - amount);
+                destAccount.setValue(destAccount.getValue() + amount);
+                result = true;
             }
-        }
         return result;
     }
 }

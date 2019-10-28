@@ -96,4 +96,16 @@ public class BankTest {
         bank.transferMoney("001", "1", "001", "0", 10);
         assertThat(bank.getUserAccounts("001").get(1).getValue(), is(21.0));
     }
+
+    @Test
+    public void whenDestAccountNotExist() {
+        Bank bank = new Bank();
+        bank.addUser(new User("petr1", "001"));
+        bank.addAccountToUser("001", new Account(10, "1"));
+        bank.addUser(new User("petr2", "002"));
+        bank.addAccountToUser("002", new Account(20, "2"));
+        bank.transferMoney("001", "1", "002", "002", 10);
+        assertThat(bank.getUserAccounts("001").get(0).getValue(), is(10.0));
+        assertThat(bank.getUserAccounts("002").get(0).getValue(), is(20.0));
+    }
 }
