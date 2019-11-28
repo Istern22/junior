@@ -4,17 +4,8 @@ import java.util.*;
 
 public class DepartmentSort {
 
-    /**
-     * Проходим по каждому элементу массива, разбиваем его на части
-     * Вычисляем путь до подразделения(включительно) и до родителя(не включая сам элемент)
-     * Если такой путь не содержится в массиве подразделений, то добавляем путь и его родителя
-     * Таким образом будут добавлены недостающие элементы дерева
-     * Нужно добавлять полный путь, чтобы потом по нему сортировать
-     * Нужно добавлять полный путь до родителя, чтобы различать путь через одинаковые промежуточные элементы
-     * @param structure исходный массив подразделений
-     */
-    public ArrayList<String> fillGaps(String[] structure) {
-        ArrayList<String> departments = new ArrayList<>();
+    public List<String> fillGaps(ArrayList<String> structure) {
+        Set<String> departments = new TreeSet<>();
         for (String dep : structure) {
             String[] parts = dep.split("\\\\");
             String path = "";
@@ -23,42 +14,53 @@ public class DepartmentSort {
                 departments.add(path);
             }
         }
-        return departments;
+        return new ArrayList<>(departments);
     }
 
-    public ArrayList<String> parents(String[] structure) {
-        ArrayList<String> parents = new ArrayList<>();
-        for (String dep : fillGaps(structure)) {
-            String[] parts = dep.split("\\\\");
-            for (int i = 0; i < parts.length; i++) {
-                if (i == 0) {
-                    parents.add(parts[i]);
-                }
-            }
-        }
-        return parents;
-    }
-
-    public ArrayList<String> sortAsc(String[] structure) {
-       Set<String> result = new TreeSet<>(fillGaps(structure));
-       return new ArrayList(result);
-    }
-
-    public ArrayList<String> sortDesc(String[] structure) {
-        TreeSet<String> departments = new TreeSet<>(fillGaps(structure));
-        TreeSet<String> parents = new TreeSet<>(parents(structure));
-        NavigableSet<String> parentsDesc = parents.descendingSet();
-        TreeSet<String> children = new TreeSet<>();
+    public ArrayList<String> sortAsc(ArrayList<String> structure) {
         ArrayList<String> result = new ArrayList<>();
-        for (String parent: parentsDesc) {
-            for (String dep : departments) {
-                if (dep.contains(parent)) {
-                    children.add(dep);
-                }
+        HashMap<String, String> parents = getParents(structure);
+        treeSort("", parents, result, true);
+        return result;
+    }
+
+    public ArrayList<String> sortDesc(ArrayList<String> structure) {
+        ArrayList<String> result = new ArrayList<>();
+        HashMap<String, String> parents = getParents(structure);
+        treeSort("", parents, result, false);
+        return result;
+    }
+
+    public HashMap<String, String> getParents(ArrayList<String> structure) {
+        HashMap<String, String> result = new HashMap<>();
+        for (String department : fillGaps(structure)) {
+            int lastIndex = department.lastIndexOf("\\");
+            if (lastIndex > 0) {
+                String parent = department.substring(0, lastIndex);
+                result.put(department, parent);
+            } else {
+                result.put(department, "");
             }
-            result.add(parent);
-            result.addAll(children);
         }
         return result;
+    }
+
+    public void treeSort(String parent, HashMap<String, String> parents, ArrayList<String> result, boolean ascending) {
+        ArrayList<String> children = new ArrayList<>();
+        for (Map.Entry<String, String> entry : parents.entrySet()) {
+            if (entry.getValue().equals(parent)) {
+                children.add(entry.getKey());
+            }
+        }
+
+        if (children.size() == 0) {
+            return;
+        }
+
+        children.sort(ascending ? null : Collections.reverseOrder());
+        for (String child : children) {
+            result.add(child);
+            treeSort(child, parents, result, ascending);
+        }
     }
 }
