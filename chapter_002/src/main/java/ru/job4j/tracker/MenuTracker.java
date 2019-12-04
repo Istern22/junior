@@ -2,6 +2,7 @@ package ru.job4j.tracker;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Consumer;
 
 /**
  * @author Svetlana Ragulina (alistern22@gmail.com)
@@ -20,20 +21,23 @@ public class MenuTracker {
      */
     private Tracker tracker;
 
+    private final Consumer<String> output;
+
     /**
      * @param хранит ссылку на массив типа UserAction
      */
     private List<UserAction> actions = new ArrayList<>();
 
     /**
-     * Конструктор     *
-     *
+     * Конструктор
      * @param input   объект типа Input
      * @param tracker объект типа Tracker
+     * @param output вывод
      */
-    public MenuTracker(Input input, Tracker tracker) {
+    public MenuTracker(Input input, Tracker tracker, Consumer<String> output) {
         this.input = input;
         this.tracker = tracker;
+        this.output = output;
     }
 
     /**
@@ -93,13 +97,13 @@ public class MenuTracker {
             String desc = input.ask("Enter item description: ");
             Item item = new Item(name, desc);
             tracker.add(item);
-            System.out.print(String.format("New item id: %s | name: %s | description: %s",
+            output.accept(String.format("New item id: %s | name: %s | description: %s",
                     item.getId(), item.getName(), item.getDesc()));
             System.lineSeparator();
         }
     }
 
-    private static class ShowItems extends BaseAction {
+    class ShowItems extends BaseAction {
 
         public ShowItems(int key, String name) {
             super(key, name);
@@ -110,13 +114,13 @@ public class MenuTracker {
             System.out.println("----------ALL ITEMS----------");
             ArrayList<Item> items = tracker.findAll();
             for (Item item : items) {
-                System.out.println(String.format("Item id: %s | name: %s | description: %s",
+                output.accept(String.format("Item id: %s | name: %s | description: %s",
                         item.getId(), item.getName(), item.getDesc()));
             }
         }
     }
 
-    private static class UpdateItem extends BaseAction {
+    class UpdateItem extends BaseAction {
 
         public UpdateItem(int key, String name) {
             super(key, name);
@@ -128,7 +132,7 @@ public class MenuTracker {
             String id = input.ask("Enter item id");
             Item item = tracker.findById(id);
             if (item != null) {
-                System.out.println(String.format("Item name: %s | description: %s",
+                output.accept(String.format("Item name: %s | description: %s",
                         item.getName(), item.getDesc()));
                 System.lineSeparator();
                 String name = input.ask("Enter new name: ");
@@ -136,17 +140,17 @@ public class MenuTracker {
                 Item newItem = new Item(name, desc);
                 newItem.setId(id);
                 tracker.replace(id, newItem);
-                System.out.print(String.format("Updated item id: %s | name: %s | description: %s",
+                output.accept(String.format("Updated item id: %s | name: %s | description: %s",
                         item.getId(), item.getName(), item.getDesc()));
                 System.lineSeparator();
             } else {
-                System.out.print("Item doesn't exist");
+                output.accept("Item doesn't exist");
                 System.lineSeparator();
             }
         }
     }
 
-    private static class DeleteItem extends BaseAction {
+    class DeleteItem extends BaseAction {
 
         public DeleteItem(int key, String name) {
             super(key, name);
@@ -157,16 +161,16 @@ public class MenuTracker {
             System.out.println("----------DELETE ITEM----------");
             String id = input.ask("Enter item id");
             if (tracker.delete(id)) {
-                System.out.print("Item deleted");
+                output.accept("Item deleted");
                 System.lineSeparator();
             } else {
-                System.out.print("Item doesn't exist");
+                output.accept("Item doesn't exist");
                 System.lineSeparator();
             }
         }
     }
 
-    private static class FindItemById extends BaseAction {
+    class FindItemById extends BaseAction {
 
         public FindItemById(int key, String name) {
             super(key, name);
@@ -179,17 +183,17 @@ public class MenuTracker {
             String id = input.ask("Enter item id");
             Item item = tracker.findById(id);
             if (item != null) {
-                System.out.print(String.format("Required item id: %s | name: %s | description: %s",
+                output.accept(String.format("Required item id: %s | name: %s | description: %s",
                         item.getId(), item.getName(), item.getDesc()));
                 System.lineSeparator();
             } else {
-                System.out.print("Item doesn't exist");
+                output.accept("Item doesn't exist");
                 System.lineSeparator();
             }
         }
     }
 
-    private static class FindItemsByName extends BaseAction {
+    class FindItemsByName extends BaseAction {
 
         public FindItemsByName(int key, String name) {
             super(key, name);
@@ -203,18 +207,18 @@ public class MenuTracker {
             ArrayList<Item> items = tracker.findByName(name);
             if (items.size() != 0) {
                 for (Item item : items) {
-                    System.out.print(String.format("Required item id: %s | name: %s | description: %s",
+                    output.accept(String.format("Required item id: %s | name: %s | description: %s",
                             item.getId(), item.getName(), item.getDesc()));
                     System.lineSeparator();
                 }
             } else {
-                System.out.print("Item doesn't exist");
+                output.accept("Item doesn't exist");
                 System.lineSeparator();
             }
         }
     }
 
-    private static class ExitProgram extends BaseAction {
+    class ExitProgram extends BaseAction {
 
         public ExitProgram(int key, String name) {
             super(key, name);

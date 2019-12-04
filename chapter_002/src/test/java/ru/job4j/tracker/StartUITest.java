@@ -6,6 +6,7 @@ import org.junit.Test;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
+import java.util.function.Consumer;
 
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
@@ -18,24 +19,26 @@ import static org.junit.Assert.assertThat;
 
 public class StartUITest {
     private static final String MENU =
-            "MENU\n"
-            + "0 - Add item\n"
-            + "1 - Show items\n"
-            + "2 - Update item\n"
-            + "3 - Delete item\n"
-            + "4 - Find item by id\n"
-            + "5 - Find items by name\n"
-            + "6 - Exit program\n";
+            "MENU\r\n"
+            + "0 - Add item\r\n"
+            + "1 - Show items\r\n"
+            + "2 - Update item\r\n"
+            + "3 - Delete item\r\n"
+            + "4 - Find item by id\r\n"
+            + "5 - Find items by name\r\n"
+            + "6 - Exit program\r\n";
 
-    /**
-     * Поле содержит дефолтный вывод в консоль.
-     */
-    private final PrintStream stdout = System.out;
-
-    /**
-     * Буфер для результата.
-     */
     private final ByteArrayOutputStream out = new ByteArrayOutputStream();
+
+    private final Consumer<String> output = new Consumer<String>() {
+
+        private final PrintStream stdout = new PrintStream(out);
+
+        @Override
+        public void accept(String s) {
+            stdout.println(s);
+        }
+    };
 
     @Before
     public void loadOutput() {
@@ -45,14 +48,14 @@ public class StartUITest {
 
     @After
     public void backOutput() {
-        System.setOut(this.stdout);
+        System.setOut(new PrintStream(this.out));
         System.out.println("execute after method");
     }
     @Test
     public void whenUserAddItemThenTrackerHasNewItemWithSameName() {
         Tracker tracker = new Tracker();
         Input input = new StubInput(new String[]{"0", "test name", "desc", "6"});
-        new StartUI(input, tracker).init();
+        new StartUI(input, tracker, output).init();
         assertThat(new String(out.toByteArray()), is(
                         new StringBuilder()
                                 .append(MENU)
@@ -60,6 +63,7 @@ public class StartUITest {
                                 .append(System.lineSeparator())
                                 .append(String.format("New item id: %s | name: %s | description: %s",
                                         tracker.findAll().get(0).getId(), tracker.findAll().get(0).getName(), tracker.findAll().get(0).getDesc()))
+                                .append(System.lineSeparator())
                                 .toString()
                 )
         );
@@ -70,7 +74,7 @@ public class StartUITest {
         Tracker tracker = new Tracker();
         Item item = tracker.add(new Item("test name", "desc"));
         Input input = new StubInput(new String[]{"2", item.getId(), "test replace", "desc replace", "6"});
-        new StartUI(input, tracker).init();
+        new StartUI(input, tracker, output).init();
         assertThat(new String(out.toByteArray()), is(
                         new StringBuilder()
                                 .append(MENU)
@@ -81,6 +85,7 @@ public class StartUITest {
                                 .append(System.lineSeparator())
                                 .append(String.format("Updated item id: %s | name: %s | description: %s",
                                         item.getId(), item.getName(), item.getDesc()))
+                                .append(System.lineSeparator())
                                 .toString()
                 )
         );
@@ -92,7 +97,7 @@ public class StartUITest {
         Item item1 = tracker.add(new Item("name1", "desc1"));
         Item item2 = tracker.add(new Item("name2", "desc2"));
         Input input = new StubInput(new String[]{"1", "6"});
-        new StartUI(input, tracker).init();
+        new StartUI(input, tracker, output).init();
         assertThat(new String(out.toByteArray()), is(
                         new StringBuilder()
                                 .append(MENU)
@@ -115,13 +120,14 @@ public class StartUITest {
         Item item = tracker.add(new Item("name", "desc"));
         String id = item.getId();
         Input input = new StubInput(new String[] {"3", id, "6"});
-        new StartUI(input, tracker).init();
+        new StartUI(input, tracker, output).init();
         assertThat(new String(out.toByteArray()), is(
                         new StringBuilder()
                                 .append(MENU)
                                 .append("----------DELETE ITEM----------")
                                 .append(System.lineSeparator())
                                 .append("Item deleted")
+                                .append(System.lineSeparator())
                                 .toString()
                 )
         );
@@ -133,7 +139,7 @@ public class StartUITest {
         Item item = tracker.add(new Item("name", "desc"));
         String id = item.getId();
         Input input = new StubInput(new String[]{"4", id, "6"});
-        new StartUI(input, tracker).init();
+        new StartUI(input, tracker, output).init();
         assertThat(new String(out.toByteArray()), is(
                         new StringBuilder()
                                 .append(MENU)
@@ -141,6 +147,7 @@ public class StartUITest {
                                 .append(System.lineSeparator())
                                 .append(String.format("Required item id: %s | name: %s | description: %s",
                                         item.getId(), item.getName(), item.getDesc()))
+                                .append(System.lineSeparator())
                                 .toString()
                 )
         );
@@ -152,7 +159,7 @@ public class StartUITest {
         Item item = tracker.add(new Item("name", "desc"));
         String name = item.getName();
         Input input = new StubInput(new String[]{"5", name, "6"});
-        new StartUI(input, tracker).init();
+        new StartUI(input, tracker, output).init();
         assertThat(new String(out.toByteArray()), is(
                         new StringBuilder()
                                 .append(MENU)
@@ -160,6 +167,7 @@ public class StartUITest {
                                 .append(System.lineSeparator())
                                 .append(String.format("Required item id: %s | name: %s | description: %s",
                                         item.getId(), item.getName(), item.getDesc()))
+                                .append(System.lineSeparator())
                                 .toString()
                 )
         );
