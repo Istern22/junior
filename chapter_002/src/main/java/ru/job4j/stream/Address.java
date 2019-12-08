@@ -13,4 +13,33 @@ public class Address {
         this.home = home;
         this.apartment = apartment;
     }
+
+    public String getCity() {
+        return city;
+    }
+
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+
+        return this.toString().equals(((Address) o).toString());
+    }
+
+    public int hashCode() {
+        return this.toString().hashCode();
+    }
+
+    @Override
+    public String toString() {
+        return "Address{"
+                + "city='" + city + '\''
+                + "street='" + street + '\''
+                + "home='" + home + '\''
+                + "apartment='" + apartment + '\''
+                + '}';
+    }
 }
