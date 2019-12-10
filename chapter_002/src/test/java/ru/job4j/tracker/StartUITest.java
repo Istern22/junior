@@ -18,14 +18,14 @@ import static org.junit.Assert.assertThat;
 
 public class StartUITest {
     private static final String MENU =
-            "MENU\n"
-            + "0 - Add item\n"
-            + "1 - Show items\n"
-            + "2 - Update item\n"
-            + "3 - Delete item\n"
-            + "4 - Find item by id\n"
-            + "5 - Find items by name\n"
-            + "6 - Exit program\n";
+            "MENU\r\n"
+            + "0 - Add item\r\n"
+            + "1 - Show items\r\n"
+            + "2 - Update item\r\n"
+            + "3 - Delete item\r\n"
+            + "4 - Find item by id\r\n"
+            + "5 - Find items by name\r\n"
+            + "6 - Exit program\r\n";
 
     /**
      * Поле содержит дефолтный вывод в консоль.
