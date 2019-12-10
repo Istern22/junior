@@ -18,15 +18,24 @@ import static org.junit.Assert.assertThat;
  */
 
 public class StartUITest {
-    private static final String MENU =
-            "MENU\r\n"
-            + "0 - Add item\r\n"
-            + "1 - Show items\r\n"
-            + "2 - Update item\r\n"
-            + "3 - Delete item\r\n"
-            + "4 - Find item by id\r\n"
-            + "5 - Find items by name\r\n"
-            + "6 - Exit program\r\n";
+    private static final String MENU = new StringBuilder()
+            .append("MENU")
+            .append(System.lineSeparator())
+            .append("0 - Add item")
+            .append(System.lineSeparator())
+            .append("1 - Show items")
+            .append(System.lineSeparator())
+            .append("2 - Update item")
+            .append(System.lineSeparator())
+            .append("3 - Delete item")
+            .append(System.lineSeparator())
+            .append("4 - Find item by id")
+            .append(System.lineSeparator())
+            .append("5 - Find items by name")
+            .append(System.lineSeparator())
+            .append("6 - Exit program")
+            .append(System.lineSeparator())
+            .toString();
 
     private final ByteArrayOutputStream out = new ByteArrayOutputStream();
 
