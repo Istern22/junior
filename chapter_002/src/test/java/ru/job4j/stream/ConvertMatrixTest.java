@@ -9,7 +9,7 @@ import static org.junit.Assert.assertThat;
 
 public class ConvertMatrixTest {
     @Test
-    public void whenConvertMatrix() {
+    public void whenConvertMatrixList() {
         ConvertMatrix convertMatrix = new ConvertMatrix();
         List<List<Integer>> matrix = List.of(
                 List.of(1, 2, 3, 4),
@@ -18,5 +18,12 @@ public class ConvertMatrixTest {
         );
 
         assertThat(convertMatrix.convertMatrix(matrix), is(List.of(1, 2, 3, 4, 0, 1, 2, 3, 0, 0, 1, 2)));
+    }
+
+    @Test
+    public void whenConvertMatrix() {
+        ConvertMatrix convertMatrix = new ConvertMatrix();
+        Integer[][] matrix = {{1, 2, 3}, {4, 5, 6}, {7, 8, 9}};
+        assertThat(convertMatrix.convertMatrix(matrix), is(List.of(1, 2, 3, 4, 5, 6, 7, 8, 9)));
     }
 }
