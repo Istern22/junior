@@ -11,10 +11,10 @@ public class SortUserTest {
     @Test
     public void ageComparing() {
         SortUser users = new SortUser();
-        List<User> list = (new ArrayList<User>(Arrays.asList(
+        List<User> list = List.of(
                 new User("anna", 2),
                 new User("ivan", 1)
-        )));
+        );
         Set<User> sortUser = users.sort(list);
         assertThat(sortUser.iterator().next().getName(), is("ivan"));
     }
@@ -22,11 +22,11 @@ public class SortUserTest {
     @Test
     public void nameLengthComparing() {
         SortUser users = new SortUser();
-        List<User> list = (new ArrayList<User>(Arrays.asList(
+        List<User> list = List.of(
                 new User("anna", 2),
                 new User("eva", 1),
                 new User("aleksandr", 5)
-        )));
+        );
         List<User> sortUser = users.sortNameLength(list);
         assertThat(sortUser.iterator().next().getName(), is("eva"));
     }
@@ -34,13 +34,13 @@ public class SortUserTest {
     @Test
     public void nameAgeComparing() {
         SortUser users = new SortUser();
-        List<User> list = (new ArrayList<User>(Arrays.asList(
+        List<User> list = List.of(
                 new User("anna", 2),
                 new User("anna", 4),
                 new User("eva", 1),
                 new User("aleksandr", 5),
                 new User("aleksandr", 3)
-        )));
+        );
         List<User> sortUser = users.sortByAllFields(list);
         assertThat(sortUser.iterator().next().getAge(), is(3));
     }
