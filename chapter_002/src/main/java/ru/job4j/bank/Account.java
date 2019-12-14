@@ -38,4 +38,14 @@ public class Account {
     public int hashCode() {
         return this.requisites.hashCode();
     }
+
+    public boolean transfer(Account srcAccount, double amount) {
+        boolean result = false;
+        if (srcAccount != null && srcAccount.getValue() >= amount) {
+            srcAccount.setValue(srcAccount.getValue() - amount);
+            this.setValue(this.getValue() + amount);
+            result = true;
+        }
+        return result;
+    }
 }
