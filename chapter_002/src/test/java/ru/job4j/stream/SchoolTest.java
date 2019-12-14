@@ -2,6 +2,8 @@ package ru.job4j.stream;
 
 import org.junit.Test;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -25,6 +27,14 @@ public class SchoolTest {
             new Student("Ivanova", 10),
             new Student("Ivanova", 10)
     );
+
+    public final static List<Student> STUDENTS_3 = new ArrayList<Student>(Arrays.asList(
+            new Student("Petrov", 75),
+            null,
+            new Student("Petrova", 20),
+            new Student("Ivanov", 60),
+            new Student("Ivanova", 10)
+    ));
 
     @Test
     public void whenRangeFrom70To100ThanClass10A() {
@@ -65,5 +75,14 @@ public class SchoolTest {
                 "Ivanova", new Student("Ivanova", 10)
         );
         assertThat(school.convert(STUDENTS_2), is(studentMap));
+    }
+
+    @Test
+    public void whenScoreOverBound() {
+        School school = new School();
+        assertThat(school.levelOf(STUDENTS_3, 50), is(List.of(
+                new Student("Petrov", 75),
+                new Student("Ivanov", 60)
+        )));
     }
 }
