@@ -1,9 +1,6 @@
 package ru.job4j.bank;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
+import java.util.*;
 
 public class Bank {
 
@@ -18,14 +15,11 @@ public class Bank {
     }
 
     public User findUser(String passport) {
-        User foundUser = null;
-        for (User user : users.keySet()) {
-            if (passport.equals(user.getPassport())) {
-                foundUser = user;
-                break;
-            }
-        }
-        return foundUser;
+        return users.keySet()
+                .stream()
+                .filter(user -> passport.equals(user.getPassport()))
+                .findFirst()
+                .orElse(null);
     }
 
     public void addAccountToUser(String passport, Account account) {
@@ -52,26 +46,20 @@ public class Bank {
     }
 
     public Account findAccount(String passport, String requisite) {
-        List<Account> accounts = getUserAccounts(passport);
-        Account userAccount = null;
-        for (Account account : accounts) {
-            if (requisite == account.getRequisites()) {
-                userAccount = account;
-                break;
-            }
-        }
-        return userAccount;
+        return getUserAccounts(passport)
+                .stream()
+                .filter(account -> requisite == account.getRequisites())
+                .findFirst()
+                .orElse(null);
     }
 
     public boolean transferMoney(String srcPassport, String srcRequisite, String destPassport, String destRequisite, double amount) {
         boolean result = false;
         Account srcAccount = findAccount(srcPassport, srcRequisite);
         Account destAccount = findAccount(destPassport, destRequisite);
-        if (srcAccount != null && destAccount != null && srcAccount.getValue() >= amount) {
-                srcAccount.setValue(srcAccount.getValue() - amount);
-                destAccount.setValue(destAccount.getValue() + amount);
-                result = true;
-            }
+        if (destAccount != null) {
+            destAccount.transfer(srcAccount, amount);
+        }
         return result;
     }
 }
