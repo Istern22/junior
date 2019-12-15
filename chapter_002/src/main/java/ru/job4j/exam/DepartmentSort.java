@@ -4,7 +4,7 @@ import java.util.*;
 
 public class DepartmentSort {
 
-    public List<String> fillGaps(ArrayList<String> structure) {
+    public List<String> fillGaps(List<String> structure) {
         Set<String> departments = new TreeSet<>();
         for (String dep : structure) {
             String[] parts = dep.split("\\\\");
@@ -17,21 +17,21 @@ public class DepartmentSort {
         return new ArrayList<>(departments);
     }
 
-    public ArrayList<String> sortAsc(ArrayList<String> structure) {
+    public ArrayList<String> sortAsc(List<String> structure) {
         ArrayList<String> result = new ArrayList<>();
         HashMap<String, String> parents = getParents(structure);
         treeSort("", parents, result, true);
         return result;
     }
 
-    public ArrayList<String> sortDesc(ArrayList<String> structure) {
+    public ArrayList<String> sortDesc(List<String> structure) {
         ArrayList<String> result = new ArrayList<>();
         HashMap<String, String> parents = getParents(structure);
         treeSort("", parents, result, false);
         return result;
     }
 
-    public HashMap<String, String> getParents(ArrayList<String> structure) {
+    public HashMap<String, String> getParents(List<String> structure) {
         HashMap<String, String> result = new HashMap<>();
         for (String department : fillGaps(structure)) {
             int lastIndex = department.lastIndexOf("\\");
@@ -45,7 +45,7 @@ public class DepartmentSort {
         return result;
     }
 
-    public void treeSort(String parent, HashMap<String, String> parents, ArrayList<String> result, boolean ascending) {
+    public void treeSort(String parent, HashMap<String, String> parents, List<String> result, boolean ascending) {
         ArrayList<String> children = new ArrayList<>();
         for (Map.Entry<String, String> entry : parents.entrySet()) {
             if (entry.getValue().equals(parent)) {
