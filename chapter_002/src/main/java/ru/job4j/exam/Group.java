@@ -1,37 +1,44 @@
 package ru.job4j.exam;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 public class Group {
 
-    public static Map<String, Set<String>> sections(List<Student> students) {
-
-        /**students.stream().flatMap(
-                holder -> new Holder(String key, String value)
-        ).collect(
-                Collectors.groupingBy(t -> t.key,
+    public static Map<String, Set<String>> sections(List<Student> students)  {
+        return students.stream()
+                .flatMap(student -> student.getUnits().stream().map(unit -> new Holder(unit, student.getName())))
+                .collect(Collectors.groupingBy(
+                        holder -> holder.getKey(),
                         Collector.of(
-                                HashSet::new,
-                                (set, el) ->
-                                        (left, right) -> {left.addAll(right); return left; }
-                         )
-                )
-        );*/
-
-        return null;
+                                () -> new HashSet<>(),
+                                (set, holder) -> set.add(holder.getValue()),
+                                (set1, set2) -> {
+                                    set1.addAll(set2);
+                                    return set1;
+                                }
+                        )));
     }
 
     static class Holder {
-        String key, value;
+        private String key, value;
 
         Holder(String key, String value) {
             this.key = key;
             this.value = value;
+        }
+        public String getKey() {
+            return key;
+        }
+
+        public String getValue() {
+            return value;
+        }
+
+        @Override
+        public String toString() {
+            return key + " " + value;
         }
     }
 }
