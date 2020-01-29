@@ -25,18 +25,35 @@ public class Logic3T {
         return result;
     }
 
-    public boolean isWinnerX() {
-        return this.fillBy(Figure3T::hasMarkX, 0, 0, 1, 0)
-                || this.fillBy(Figure3T::hasMarkX, 0, 0, 0, 1)
-                || this.fillBy(Figure3T::hasMarkX, 0, 0, 1, 1)
-                || this.fillBy(Figure3T::hasMarkX, this.table.length - 1, 0, -1, 1);
+    public boolean isWinner(Predicate<Figure3T> hasMark) {
+        return this.fillBy(hasMark, 0, 0, 1, 0)
+                || this.fillBy(hasMark, 1, 0,  0, 1)
+                || this.fillBy(hasMark, 2, 0, 0, 1)
+                || this.fillBy(hasMark, 0, 1, 1, 0)
+                || this.fillBy(hasMark, 0, 2, 1, 0)
+                || this.fillBy(hasMark, 0, 0, 0, 1)
+                || this.fillBy(hasMark, 0, 0, 1, 1)
+                || this.fillBy(hasMark, this.table.length - 1, 0, -1, 1);
     }
 
     public boolean isWinnerO() {
-        return false;
+        return isWinner(Figure3T::hasMarkO);
+    }
+
+    public boolean isWinnerX() {
+        return isWinner(Figure3T::hasMarkX);
     }
 
     public boolean hasGap() {
-        return true;
+        var result = false;
+        for (int i = 0; i < table.length; i++) {
+            for (int j = 0; j < table.length; j++) {
+                if (!table[i][j].hasMarkO() && !table[i][j].hasMarkX()) {
+                    result = true;
+                    break;
+                }
+            }
+        }
+        return result;
     }
 }
