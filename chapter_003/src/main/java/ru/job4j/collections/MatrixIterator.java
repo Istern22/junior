@@ -21,16 +21,15 @@ public class MatrixIterator implements Iterator {
     @Override
     public Object next() {
         Object result;
-        if (hasNext()) {
-            result = values[row][column];
-            if (column == values[row].length - 1) {
-                row++;
-                column = 0;
-            } else {
-                column++;
-            }
-        } else {
+        if (!hasNext()) {
             throw new NoSuchElementException();
+        }
+        result = values[row][column];
+        if (column == values[row].length - 1) {
+            row++;
+            column = 0;
+        } else {
+            column++;
         }
         return result;
     }
