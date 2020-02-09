@@ -24,12 +24,10 @@ public class MatrixIterator implements Iterator {
         if (!hasNext()) {
             throw new NoSuchElementException();
         }
-        result = values[row][column];
-        if (column == values[row].length - 1) {
+        result = values[row][column++];
+        if (column == values[row].length) {
             row++;
             column = 0;
-        } else {
-            column++;
         }
         return result;
     }
