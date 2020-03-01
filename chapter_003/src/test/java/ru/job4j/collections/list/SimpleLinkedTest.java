@@ -7,10 +7,10 @@ import java.util.ConcurrentModificationException;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.*;
 
-public class DynamicListTest {
+public class SimpleLinkedTest {
     @Test
     public void whenCreateListAndAddElements() {
-        var list = new DynamicList<Integer>();
+        var list = new SimpleLinked<Integer>();
         list.add(1);
         list.add(2);
         list.add(3);
@@ -21,7 +21,7 @@ public class DynamicListTest {
 
     @Test
     public void whenCreateListAndAddElementsAndIterateIt() {
-        var list = new DynamicList<Integer>();
+        var list = new SimpleLinked<Integer>();
         list.add(1);
         list.add(2);
         list.add(3);
@@ -37,7 +37,7 @@ public class DynamicListTest {
 
     @Test (expected = ConcurrentModificationException.class)
     public void whenIterateListWithModification() {
-        var list = new DynamicList<Integer>();
+        var list = new SimpleLinked<Integer>();
         list.add(1);
         var it = list.iterator();
         list.add(2);
