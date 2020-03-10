@@ -6,7 +6,7 @@ import java.util.ConcurrentModificationException;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
-public class DynamicList<E> implements Iterable {
+public class SimpleLinked<E> implements Iterable {
 
     private int size = 0;
     private Node<E> first;
@@ -29,6 +29,15 @@ public class DynamicList<E> implements Iterable {
             result = result.next;
         }
         return result.data;
+    }
+
+    public E deleteFirst() {
+        if (first == null) {
+            return null;
+        }
+        E result = first.data;
+        first = first.next;
+        return result;
     }
 
     @Override

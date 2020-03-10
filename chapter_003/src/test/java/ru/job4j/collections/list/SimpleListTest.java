@@ -1,19 +1,16 @@
 package ru.job4j.collections.list;
 
 import org.junit.Test;
-import org.junit.Before;
-
-import java.util.List;
 
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.nullValue;
 import static org.junit.Assert.assertThat;
 
-public class SimpleArrayListTest {
+public class SimpleListTest {
 
     @Test
     public void whenAddThreeElementsThenUseGetOneResultTwo() {
-        SimpleArrayList<Integer> list = new SimpleArrayList<>();
+        SimpleList<Integer> list = new SimpleList<>();
         list.add(1);
         list.add(2);
         list.add(3);
@@ -22,7 +19,7 @@ public class SimpleArrayListTest {
 
     @Test
     public void whenAddThreeElementsThenUseGetSizeResultThree() {
-        SimpleArrayList<Integer> list = new SimpleArrayList<>();
+        SimpleList<Integer> list = new SimpleList<>();
         list.add(1);
         list.add(2);
         list.add(3);
@@ -31,13 +28,13 @@ public class SimpleArrayListTest {
 
     @Test
     public void whenEmptyList() {
-        SimpleArrayList<String> list = new SimpleArrayList<>();
+        SimpleList<String> list = new SimpleList<>();
         assertThat(list.get(1), is(nullValue()));
     }
 
    @Test
     public void whenTestList() {
-        SimpleArrayList<String> list = new SimpleArrayList<>();
+        SimpleList<String> list = new SimpleList<>();
         list.add("1");
         list.add("2");
         list.add("");
@@ -50,13 +47,13 @@ public class SimpleArrayListTest {
 
     @Test (expected = IndexOutOfBoundsException.class)
     public void whenDeleteElementFromNullList() {
-        SimpleArrayList<String> list = new SimpleArrayList<>();
+        SimpleList<String> list = new SimpleList<>();
         assertThat(list.delete(1), is(nullValue()));
     }
 
     @Test
     public void whenDeleteOneElementFromListWithOneElement() {
-        SimpleArrayList<Integer> list = new SimpleArrayList<>();
+        SimpleList<Integer> list = new SimpleList<>();
         list.add(0);
         assertThat(list.delete(0), is(0));
         assertThat(list.get(0), is(nullValue()));
@@ -64,7 +61,7 @@ public class SimpleArrayListTest {
 
     @Test
     public void whenDeleteOneElementFromListWithOneElementWhenOtherNull() {
-        SimpleArrayList<Integer> list = new SimpleArrayList<>();
+        SimpleList<Integer> list = new SimpleList<>();
         list.add(0);
         list.add(null);
         assertThat(list.delete(0), is(nullValue()));
@@ -73,7 +70,7 @@ public class SimpleArrayListTest {
 
     @Test
     public void whenDeleteOneElementFromListWithThreeElements() {
-        SimpleArrayList<Integer> list = new SimpleArrayList<>();
+        SimpleList<Integer> list = new SimpleList<>();
         list.add(1);
         list.add(2);
         list.add(3);
@@ -83,7 +80,7 @@ public class SimpleArrayListTest {
 
     @Test
     public void whenDeleteOneElementFromCenterOfListWithThreeElements() {
-        SimpleArrayList<Integer> list = new SimpleArrayList<>();
+        SimpleList<Integer> list = new SimpleList<>();
         list.add(1);
         list.add(2);
         list.add(3);
@@ -96,7 +93,7 @@ public class SimpleArrayListTest {
 
     @Test
     public void whenDeleteOneElementFromCenterOfListWithFiveElements() {
-        SimpleArrayList<Integer> list = new SimpleArrayList<>();
+        SimpleList<Integer> list = new SimpleList<>();
         list.add(1);
         list.add(2);
         list.add(3);

@@ -1,6 +1,6 @@
 package ru.job4j.collections.list;
 
-public class SimpleArrayList<E> {
+public class SimpleList<E> {
 
     private int size = 0;
     private Node<E> first;
