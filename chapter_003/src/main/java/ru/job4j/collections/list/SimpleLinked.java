@@ -40,6 +40,13 @@ public class SimpleLinked<E> implements Iterable {
         return result;
     }
 
+    public boolean isEmpty() {
+        if (first == null) {
+            return true;
+        }
+        return false;
+    }
+
     @Override
     public Iterator iterator() {
 
