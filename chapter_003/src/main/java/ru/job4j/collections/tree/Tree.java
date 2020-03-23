@@ -2,11 +2,20 @@ package ru.job4j.collections.tree;
 
 import java.util.*;
 
-class Tree<E> implements SimpleTree<E> {
+class Tree<E> implements SimpleTree<E>, Iterable {
     private final Node<E> root;
 
     Tree(final E root) {
         this.root = new Node<>(root);
+    }
+
+    public boolean isBinary() {
+        var isBinary = true;
+        var it = iterator();
+        while (it.hasNext() && isBinary) {
+            isBinary = it.next().children.size() <= 2;
+        }
+        return isBinary;
     }
 
     @Override
@@ -35,5 +44,26 @@ class Tree<E> implements SimpleTree<E> {
             data.addAll(el.children);
         }
         return rsl;
+    }
+
+    @Override
+    public Iterator<Node<E>> iterator() {
+
+        return new Iterator() {
+
+            private Queue<Node<E>> data = new LinkedList<>(Arrays.asList(root));
+
+            @Override
+            public boolean hasNext() {
+                return !data.isEmpty();
+            }
+
+            @Override
+            public Node<E> next() {
+                var node = data.poll();
+                data.addAll(node.children);
+                return node;
+            }
+        };
     }
 }

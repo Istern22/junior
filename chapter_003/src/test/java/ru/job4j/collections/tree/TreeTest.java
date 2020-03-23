@@ -32,4 +32,27 @@ public class TreeTest {
         tree.add(1, 2);
         assertThat(tree.findBy(7).isPresent(), is(false));
     }
+
+    @Test
+    public void whenAddThenBinary() {
+        var tree = new Tree<>(0);
+        tree.add(0, 1);
+        tree.add(0, 2);
+        tree.add(1, 4);
+        tree.add(1, 5);
+        tree.add(5, 6);
+        assertThat(tree.isBinary(), is(true));
+    }
+    @Test
+    public void whenAddThenNotBinary() {
+        var tree = new Tree<>(0);
+        tree.add(0, 1);
+        tree.add(0, 2);
+        tree.add(1, 4);
+        tree.add(1, 5);
+        tree.add(5, 6);
+        tree.add(5, 7);
+        tree.add(5, 8);
+        assertThat(tree.isBinary(), is(false));
+    }
 }
