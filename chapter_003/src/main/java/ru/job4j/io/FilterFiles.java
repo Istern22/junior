@@ -12,8 +12,8 @@ import static java.nio.file.FileVisitResult.CONTINUE;
 
 public class FilterFiles implements FileVisitor<Path> {
 
-    private String extension;
-    private List<String> files = new ArrayList<String>();
+    protected String extension;
+    protected List<String> files = new ArrayList<String>();
 
     public FilterFiles(String extension) {
         this.extension = extension.toLowerCase();
