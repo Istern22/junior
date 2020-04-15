@@ -27,6 +27,17 @@ public class Chat {
         var hello = "Привет. Напишите что-нибудь.";
         System.out.println(hello);
         log.add(hello);
+        /*while (!(input = in.nextLine()).toLowerCase().contains("закончить")) {
+            log.add(input);
+            if (input.toLowerCase().contains("стоп")) {
+                String inner;
+                while (!(inner = in.nextLine()).toLowerCase().contains("продолжить")) {
+                    log.add(inner);
+                }
+                log.add(inner);
+            }
+            answer();
+        }*/
         while (in.hasNextLine()) {
             String input = in.nextLine();
             if (input.toLowerCase().contains("закончить")) {
