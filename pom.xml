@@ -20,6 +20,7 @@
         <module>chapter_002</module>
         <module>tictactoe</module>
         <module>chapter_003</module>
+        <module>search</module>
     </modules>
 
 	 <dependencies>
