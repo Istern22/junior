@@ -16,14 +16,19 @@ public class EchoServer {
                      var in = new BufferedReader(
                              new InputStreamReader(socket.getInputStream()))) {
                     String str = in.readLine();
+                    String item = "";
                     if (!str.isEmpty()) {
-                        if (str.equals("GET /?msg=Bye HTTP/1.1")) {
+                       var data = str.split(" ");
+                       item = data[1].split("=")[1];
+                        if (item.equals("Exit")) {
                             socket.close();
                             server.close();
                         }
                         System.out.println(str);
                     }
-                    out.write("HTTP/1.1 200 OK\r\n\\".getBytes());
+                    out.write(("HTTP/1.1 200 OK" + "\r\n").getBytes());
+                    out.write((item + "\r\n").getBytes());
+                    System.out.println(item);
                 }
             }
         } catch (Exception e) {
