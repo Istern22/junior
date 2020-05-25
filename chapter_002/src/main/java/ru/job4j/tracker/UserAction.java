@@ -1,5 +1,8 @@
 package ru.job4j.tracker;
 
+import java.io.IOException;
+import java.sql.SQLException;
+
 /**
  * @author Svetlana Ragulina (alistern22@gmail.com)
  * @version $Id$
@@ -18,7 +21,7 @@ public interface UserAction {
      * @param input объект типа Input
      * @param tracker объект типа Tracker
      */
-    void execute(Input input, Tracker tracker);
+    void execute(Input input, Store tracker) throws SQLException;
 
     /**
      * Метод возвращает информацию о данном пункте меню

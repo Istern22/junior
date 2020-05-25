@@ -1,5 +1,6 @@
 package ru.job4j.tracker;
 
+import java.util.Iterator;
 import java.util.Objects;
 
 /**
@@ -14,7 +15,17 @@ public class Item {
     private String desc;
     private long time;
 
+    public Item() {
+    }
+
     public Item(String name, String desc) {
+        this.name = name;
+        this.desc = desc;
+        this.time = System.currentTimeMillis();
+    }
+
+    public Item(String id, String name, String desc) {
+        this.id = id;
         this.name = name;
         this.desc = desc;
         this.time = System.currentTimeMillis();

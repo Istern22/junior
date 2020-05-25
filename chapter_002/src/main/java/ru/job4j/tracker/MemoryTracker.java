@@ -10,7 +10,7 @@ import java.util.Random;
  * @since 0.1
  */
 
-public class Tracker {
+public class MemoryTracker {
 
     private ArrayList<Item> items = new ArrayList<>();
     private static final Random RN = new Random();

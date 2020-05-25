@@ -11,7 +11,7 @@ import static org.junit.Assert.assertThat;
 public class TrackerTest {
     @Test
     public void whenAddNewItemThenTrackerHasSameItem() {
-        Tracker tracker = new Tracker();
+        MemoryTracker tracker = new MemoryTracker();
         long created = System.currentTimeMillis();
         Item item = new Item("test1", "testDescription");
         tracker.add(item);
@@ -21,7 +21,7 @@ public class TrackerTest {
 
     @Test
     public void whenReplaceNameThenReturnNewName() {
-        Tracker tracker = new Tracker();
+        MemoryTracker tracker = new MemoryTracker();
         Item previous = new Item("test1", "testDescription");
         tracker.add(previous);
         Item next = new Item("test2", "testDescription");
@@ -32,7 +32,7 @@ public class TrackerTest {
 
     @Test
     public void whenDeleteItemThenNewArray() {
-        Tracker tracker = new Tracker();
+        MemoryTracker tracker = new MemoryTracker();
         Item item0 = new Item("name0", "description0");
         tracker.add(item0);
         Item item1 = new Item("name1", "description1");
@@ -49,7 +49,7 @@ public class TrackerTest {
 
     @Test
     public void whenDeleteNotFoundedItemThenFalse() {
-        Tracker tracker = new Tracker();
+        MemoryTracker tracker = new MemoryTracker();
         Item item0 = new Item("name0", "description0");
         tracker.add(item0);
         Item item1 = new Item("name1", "description1");
@@ -66,7 +66,7 @@ public class TrackerTest {
 
     @Test
     public void whenFindAllThenNewArray() {
-        Tracker tracker = new Tracker();
+        MemoryTracker tracker = new MemoryTracker();
         Item item0 = new Item("name0", "description0");
         tracker.add(item0);
         Item item1 = new Item("name1", "description1");
@@ -84,7 +84,7 @@ public class TrackerTest {
 
     @Test
     public void whenFindAllAndDeleteThenNewArray() {
-        Tracker tracker = new Tracker();
+        MemoryTracker tracker = new MemoryTracker();
         Item item0 = new Item("name0", "description0");
         tracker.add(item0);
         Item item1 = new Item("name1", "description1");
@@ -103,7 +103,7 @@ public class TrackerTest {
 
     @Test
     public void whenFindAllNamesThanNewArray() {
-        Tracker tracker = new Tracker();
+        MemoryTracker tracker = new MemoryTracker();
         Item item0 = new Item("name0", "description0");
         tracker.add(item0);
         Item item1 = new Item("name1", "description1");
