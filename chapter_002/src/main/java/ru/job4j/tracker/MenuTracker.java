@@ -1,5 +1,6 @@
 package ru.job4j.tracker;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
@@ -19,7 +20,7 @@ public class MenuTracker {
     /**
      * @param хранит ссылку на объект
      */
-    private Tracker tracker;
+    private Store tracker;
 
     private final Consumer<String> output;
 
@@ -34,7 +35,7 @@ public class MenuTracker {
      * @param tracker объект типа Tracker
      * @param output вывод
      */
-    public MenuTracker(Input input, Tracker tracker, Consumer<String> output) {
+    public MenuTracker(Input input, Store tracker, Consumer<String> output) {
         this.input = input;
         this.tracker = tracker;
         this.output = output;
@@ -63,11 +64,11 @@ public class MenuTracker {
     }
 
     /**
-     * В зависимости от указанного ключа, метод выполняет соответсвтующие действия     *
+     * В зависимости от указанного ключа, метод выполняет соответсвтующие действия
      *
      * @param key ключ операции
      */
-    public void select(int key) {
+    public void select(int key) throws SQLException {
         this.actions.get(key).execute(this.input, this.tracker);
     }
 
@@ -90,13 +91,17 @@ public class MenuTracker {
         }
 
         @Override
-        public void execute(Input input, Tracker tracker) {
+        public void execute(Input input, Store tracker) {
             System.out.println("----------ADD ITEM----------");
             System.lineSeparator();
             String name = input.ask("Enter item name: ");
             String desc = input.ask("Enter item description: ");
             Item item = new Item(name, desc);
-            tracker.add(item);
+            try {
+                tracker.add(item);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
             output.accept(String.format("New item id: %s | name: %s | description: %s",
                     item.getId(), item.getName(), item.getDesc()));
             System.lineSeparator();
@@ -110,9 +115,14 @@ public class MenuTracker {
         }
 
         @Override
-        public void execute(Input input, Tracker tracker) {
+        public void execute(Input input, Store tracker) {
             System.out.println("----------ALL ITEMS----------");
-            ArrayList<Item> items = tracker.findAll();
+            List<Item> items = null;
+            try {
+                items = tracker.findAll();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
             for (Item item : items) {
                 output.accept(String.format("Item id: %s | name: %s | description: %s",
                         item.getId(), item.getName(), item.getDesc()));
@@ -127,10 +137,15 @@ public class MenuTracker {
         }
 
         @Override
-        public void execute(Input input, Tracker tracker) {
+        public void execute(Input input, Store tracker) {
             System.out.println("----------UPDATE ITEM----------");
             String id = input.ask("Enter item id");
-            Item item = tracker.findById(id);
+            Item item = null;
+            try {
+                item = tracker.findById(id);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
             if (item != null) {
                 output.accept(String.format("Item name: %s | description: %s",
                         item.getName(), item.getDesc()));
@@ -139,9 +154,13 @@ public class MenuTracker {
                 String desc = input.ask("Enter new description: ");
                 Item newItem = new Item(name, desc);
                 newItem.setId(id);
-                tracker.replace(id, newItem);
+                try {
+                    tracker.replace(id, newItem);
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
                 output.accept(String.format("Updated item id: %s | name: %s | description: %s",
-                        item.getId(), item.getName(), item.getDesc()));
+                        item.getId(), newItem.getName(), newItem.getDesc()));
                 System.lineSeparator();
             } else {
                 output.accept("Item doesn't exist");
@@ -157,15 +176,19 @@ public class MenuTracker {
         }
 
         @Override
-        public void execute(Input input, Tracker tracker) {
+        public void execute(Input input, Store tracker) {
             System.out.println("----------DELETE ITEM----------");
             String id = input.ask("Enter item id");
-            if (tracker.delete(id)) {
-                output.accept("Item deleted");
-                System.lineSeparator();
-            } else {
-                output.accept("Item doesn't exist");
-                System.lineSeparator();
+            try {
+                if (tracker.delete(id)) {
+                    output.accept("Item deleted");
+                    System.lineSeparator();
+                } else {
+                    output.accept("Item doesn't exist");
+                    System.lineSeparator();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
             }
         }
     }
@@ -177,11 +200,16 @@ public class MenuTracker {
         }
 
         @Override
-        public void execute(Input input, Tracker tracker) {
+        public void execute(Input input, Store tracker) {
             System.out.println("----------FIND ITEM BY ID----------");
             System.lineSeparator();
             String id = input.ask("Enter item id");
-            Item item = tracker.findById(id);
+            Item item = null;
+            try {
+                item = tracker.findById(id);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
             if (item != null) {
                 output.accept(String.format("Required item id: %s | name: %s | description: %s",
                         item.getId(), item.getName(), item.getDesc()));
@@ -200,11 +228,16 @@ public class MenuTracker {
         }
 
         @Override
-        public void execute(Input input, Tracker tracker) {
+        public void execute(Input input, Store tracker) {
             System.out.println("----------FIND ITEM BY NAME----------");
             System.lineSeparator();
             String name = input.ask("Enter item name");
-            ArrayList<Item> items = tracker.findByName(name);
+            List<Item> items = null;
+            try {
+                items = tracker.findByName(name);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
             if (items.size() != 0) {
                 for (Item item : items) {
                     output.accept(String.format("Required item id: %s | name: %s | description: %s",
@@ -225,7 +258,8 @@ public class MenuTracker {
         }
 
         @Override
-        public void execute(Input input, Tracker tracker) {
+        public void execute(Input input, Store tracker) {
+
         }
     }
 }

@@ -1,5 +1,6 @@
 package ru.job4j.tracker;
 
+import java.sql.SQLException;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.function.Consumer;
@@ -20,7 +21,7 @@ public class StartUI {
     /**
      * Хранилище заявок.
      */
-    private final Tracker tracker;
+    private final Store tracker;
 
     private final Consumer<String> output;
     /**
@@ -29,7 +30,7 @@ public class StartUI {
      * @param tracker хранилище заявок;
      * @param output вывод
      */
-    public StartUI(Input input, Tracker tracker, Consumer<String> output) {
+    public StartUI(Input input, Store tracker, Consumer<String> output) {
         this.input = input;
         this.tracker = tracker;
         this.output = output;
@@ -38,7 +39,7 @@ public class StartUI {
     /**
      * Основной цикл программы.
      */
-    public void init() {
+    public void init() throws SQLException {
         MenuTracker menu = new MenuTracker(this.input, this.tracker, output);
         List<Integer> range = new ArrayList<>();
         menu.fillActions();
@@ -60,11 +61,14 @@ public class StartUI {
      * @param args
      */
     public static void main(String[] args) {
-        new StartUI(
-                new ValidateInput(
-                        new ConsoleInput()
-                ),
-                new Tracker(), System.out::println
-        ).init();
+        Input validate = new ValidateInput(
+                new ConsoleInput()
+        );
+        try (Store tracker = new SqlTracker()) {
+            tracker.init();
+            new StartUI(validate, tracker, System.out::println).init();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
