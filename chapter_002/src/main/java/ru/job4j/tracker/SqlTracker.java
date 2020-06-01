@@ -8,9 +8,13 @@ import java.util.Properties;
 import java.util.Random;
 import java.util.function.Predicate;
 
-public class SqlTracker implements Store {
+public class SqlTracker implements Store, AutoCloseable {
 
     private Connection cn;
+
+    public SqlTracker(Connection cn) {
+        this.cn = cn;
+    }
 
     public void init() {
         try (InputStream in = SqlTracker.class.getClassLoader().getResourceAsStream("app.properties")) {

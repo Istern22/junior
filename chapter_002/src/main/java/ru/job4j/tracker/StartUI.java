@@ -1,5 +1,6 @@
 package ru.job4j.tracker;
 
+import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.ArrayList;
@@ -22,6 +23,8 @@ public class StartUI {
      * Хранилище заявок.
      */
     private final Store tracker;
+
+    private static Connection connection;
 
     private final Consumer<String> output;
     /**
@@ -64,7 +67,7 @@ public class StartUI {
         Input validate = new ValidateInput(
                 new ConsoleInput()
         );
-        try (Store tracker = new SqlTracker()) {
+        try (Store tracker = new SqlTracker(connection)) {
             tracker.init();
             new StartUI(validate, tracker, System.out::println).init();
         } catch (Exception e) {
