@@ -12,7 +12,7 @@ import static org.junit.Assert.*;
 
 public class SqlTrackerTest {
 
-    public Connection init() {
+    /*public Connection init() {
         try (InputStream in = SqlTracker.class.getClassLoader().getResourceAsStream("app.properties")) {
             Properties config = new Properties();
             config.load(in);
@@ -82,5 +82,5 @@ public class SqlTrackerTest {
             String id = tracker.findAll().get(0).getId();
             assertThat(tracker.findById(id).getName(), is("testName0"));
         }
-    }
+    }*/
 }
