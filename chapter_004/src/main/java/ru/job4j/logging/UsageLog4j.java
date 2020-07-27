@@ -20,5 +20,10 @@ public class UsageLog4j {
         double item7 = 0.006;
         LOG.debug("Types : byte {}, short {}, int {}, long {}, char {}, boolean {}, float {}, double {}",
                 item0, item1, item2, item3, item4, item5, item6, item7);
+        try {
+            throw new Exception("Not supported code");
+        } catch (Exception e) {
+            LOG.error("Exception in log example", e);
+        }
     }
 }
