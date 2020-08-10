@@ -1,0 +1,74 @@
+Используя различные утилиты для анализа памяти виртуальной машины провести анализ работы программы из второго модуля. Программа заявок.
+Данные анализа описать в текстовом файле и добавить в репозиторий. В файле нужно указать, каким инструментом проведен анализ и что по нему видно.
+Попробовать добиться состояния выхода за пределы памяти и посмотреть состояние виртуальной машины.
+
+Start:
+
+Запуск с ключами -Xms4m -Xmx6m -XX:+UseSerialGC
+
+jps
+2160 StartUI
+
+jmap -histo:live 2160
+получила гистограмму объектов из кучи 
+Всего 717 классов,  57721 экземпляров, 3221256 байта
+После работы с программой:
+Всего 1128 классов,  78933 экземпляров, 4064752 байта
+
+jstat -class 2160
+загруженные и выгруженные классы
+Loaded  Bytes  Unloaded  Bytes     Time
+  1595  3466,0        0     0,0       0,39
+После работы с программой:
+Loaded  Bytes  Unloaded  Bytes     Time
+  2501  5062,1       72    89,0       0,80
+
+jstat -gc 2160
+сборщик мусора
+  S0C    S1C    S0U    S1U      EC       EU        OC         OU       MC     MU    CCSC   CCSU   YGC     YGCT    FGC    FGCT    CGC    CGCT     GCT
+192,0  192,0   0,0    0,0    1664,0    0,0      4096,0     3145,8   6016,0 3781,1 640,0  399,5       7    0,015   2      0,036   -          -    0,051
+После работы с программой:
+ S0C    S1C    S0U    S1U      EC       EU        OC         OU       MC     MU    CCSC   CCSU   YGC     YGCT    FGC    FGCT    CGC    CGCT     GCT
+192,0  192,0   0,0    0,0    1664,0   694,6     4096,0     4013,8   9344,0 8797,5 1152,0 917,0      20    0,017  15      0,207   -          -    0,224
+ 
+jstack 2160
+дамп стека
+2020-08-10 22:44:28
+Full thread dump Java HotSpot(TM) 64-Bit Server VM (13.0.1+9 mixed mode, sharing)
+Threads class SMR info:
+_java_thread_list=0x000001f148776e80, length=11
+После работы с программой:
+Threads class SMR info:
+_java_thread_list=0x000001f1486f40a0, length=17
+
+jconsole
+Heap Memory Usage
+Used: 5 391 kbytes Committed: 5 952 kbytes Max: 5 952 kbytes
+GC запускается 2-3 раза/сек
+
+За время работы программы:
+GC time: 
+ 0,016 seconds on Copy (25 collections)
+ 0,311 seconds on MarkSweepCompact (23 collections)
+
+В итоге - за время использования программы увеличилось кол-во потоков, классов, экземпляров, OutOfMemoryError не удалось руками спровоцировать. 
+С ключами -Xms4m -Xmx4m -XX:+UseSerialGC - программа запустилась и до начала работы - OutOfMemoryError
+
+В такой ситуации:
+
+jconsole не запускается
+
+Всего 1040 классов,  82337 экземпляров, 4061440 байта
+
+Loaded  Bytes  Unloaded  Bytes     Time
+  2526  5031,3      164   212,1       7,54
+  
+ S0C    S1C    S0U    S1U      EC       EU        OC         OU       MC     MU    CCSC   CCSU   YGC     YGCT    FGC    FGCT    CGC    CGCT     GCT
+128,0  128,0  128,0   0,0    1088,0   1088,0    2752,0     2752,0   8832,0 8072,8 1152,0 871,4       7    0,008 52989  540,936   -          -  540,943
+
+Threads class SMR info:
+_java_thread_list=0x0000021d3200aff0, length=13
+
+
+
+
