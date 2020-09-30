@@ -23,6 +23,16 @@ public class ControlQuality {
         }
     }
 
+    public void resort() {
+        ArrayList<Food> products = new ArrayList<>();
+        for (var food : storage.toArray()) {
+            products.add((Food) food);
+        }
+        for (var p : products) {
+            execute(p);
+        }
+    }
+
     public static void main(String[] args) {
         Food apple = new Fruit("apple", new LocalDate("2020-09-01"), new LocalDate("2020-10-30"), 100.0, 0.0);
         Food bread = new Bakery("bread", new LocalDate("2020-09-01"), new LocalDate("2020-09-30"), 100.0, 0.0);
@@ -34,5 +44,6 @@ public class ControlQuality {
         for (Food food : input) {
             controlQuality.execute(food);
         }
+        controlQuality.resort();
     }
 }
