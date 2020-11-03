@@ -1,11 +1,8 @@
-package ru.job4j;
+package ru.job4j.storage;
 
 import net.jcip.annotations.ThreadSafe;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
-import java.util.stream.Collectors;
 
 @ThreadSafe
 public class UserStorage {
