@@ -1,28 +1,39 @@
 package ru.job4j;
 
+import java.util.Objects;
+
 public class User {
     private int id;
-    private String name;
+    private int amount;
 
-    public static User of(String name) {
-        User user = new User();
-        user.name = name;
-        return user;
+    public User(int id, int amount) {
+        this.id = id;
+        this.amount = amount;
+    }
+
+    public int getAmount() {
+        return amount;
     }
 
     public int getId() {
         return id;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof User)) {
+            return false;
+        }
+        User user = (User) o;
+        return getId() == user.getId()
+                && getAmount() == user.getAmount();
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId(), getAmount());
     }
 }
