@@ -42,4 +42,8 @@ public class SimpleBlockingQueue<T> {
         monitor.notify();
         return value;
     }
+
+    public int size() {
+        return queue.size();
+    }
 }

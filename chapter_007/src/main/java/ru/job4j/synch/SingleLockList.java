@@ -1,7 +1,6 @@
 package ru.job4j.synch;
 
 import net.jcip.annotations.ThreadSafe;
-import ru.job4j.collections.list.DynamicArray;
 
 import java.util.ArrayList;
 import java.util.Iterator;
