@@ -1,4 +1,4 @@
-package ru.job4j;
+package ru.job4j.cache;
 
 public class ShareNotSafe {
     public static void main(String[] args) throws InterruptedException {
