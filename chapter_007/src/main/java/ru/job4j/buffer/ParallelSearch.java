@@ -16,7 +16,11 @@ public class ParallelSearch {
                             Thread.currentThread().interrupt();
 
                         }
-                        System.out.println(queue.poll());
+                        try {
+                            System.out.println(queue.poll());
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
                     }
                 }
         );
@@ -24,7 +28,11 @@ public class ParallelSearch {
         Thread producer = new Thread(
                 () -> {
                     for (int index = 0; index != 3; index++) {
-                        queue.offer(index);
+                        try {
+                            queue.offer(index);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
                     }
                 }
         );
